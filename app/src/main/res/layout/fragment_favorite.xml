@@ -29,8 +29,8 @@
                 android:layout_gravity="center"
                 android:text="@string/favourites"
                 android:textColor="@color/black"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                style="@style/TextAppearance.Material3.HeadlineSmall"
+                />
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
