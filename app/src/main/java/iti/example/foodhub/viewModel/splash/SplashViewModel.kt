@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import iti.example.foodhub.presentation.main.Auth.AuthActivity
 import iti.example.foodhub.presentation.main.MainActivity
 import iti.example.foodhub.presentation.splashView.SplashActivity
 import kotlinx.coroutines.delay
