@@ -35,15 +35,16 @@ class HomeFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         val items = listOf(
-            Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
-            Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
-            Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
-            Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
-            Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
-            Item("Item 3", "$30.00"),
-            Item("Item 1", "$10.00"),
-            Item("Item 2", "$20.00"),
-            Item("Item 3", "$30.00")
+            Item("Chicken Hawaiian"),
+            Item("Chicken Hawaiian"),
+            Item("Chicken Hawaiian"),
+            Item("Chicken Hawaiian"),
+            Item("Chicken Hawaiian"),
+            Item("Chicken Hawaiian"),
+            Item("Chicken Hawaiian"),
+            Item("Chicken Hawaiian"),
+            Item("Chicken Hawaiian"),
+            Item("Chicken Hawaiian")
         )
 
         val adapter = ItemsAdapter(items)
