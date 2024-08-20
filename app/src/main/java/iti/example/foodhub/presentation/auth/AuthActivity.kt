@@ -1,4 +1,4 @@
-package iti.example.foodhub.presentation.main.Auth
+package iti.example.foodhub.presentation.auth
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

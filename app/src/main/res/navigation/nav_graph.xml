@@ -6,7 +6,7 @@
     app:startDestination="@id/welcomeFragment2">
     <fragment
         android:id="@+id/welcomeFragment2"
-        android:name="iti.example.foodhub.presentation.main.Auth.WelcomeFragment"
+        android:name="iti.example.foodhub.presentation.auth.WelcomeFragment"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="iti.example.foodhub.presentation.main.Auth.LoginFragment"
+        android:name="iti.example.foodhub.presentation.auth.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="iti.example.foodhub.presentation.main.Auth.RegisterFragment"
+        android:name="iti.example.foodhub.presentation.auth.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
 </navigation>
