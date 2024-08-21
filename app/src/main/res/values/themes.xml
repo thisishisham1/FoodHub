@@ -1,7 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.FoodHub" parent="Theme.Material3.DayNight.NoActionBar">
-
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorPrimary">@color/primary</item>
     </style>
 
     <style name="Theme.FoodHub" parent="Base.Theme.FoodHub" />
