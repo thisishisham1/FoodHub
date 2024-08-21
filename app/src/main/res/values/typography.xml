@@ -3,36 +3,43 @@
 
     <style name="TextAppearance.Material3.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge" tools:ignore="ResourceCycle">
         <item name="fontFamily">@font/poppins_black</item>
-        <item name="android:textSize">50sp</item>
+        <item name="android:textSize">34sp</item>
+        <item name="android:lineHeight" tools:targetApi="28">40sp</item>
     </style>
 
     <style name="TextAppearance.Material3.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium" tools:ignore="ResourceCycle">
         <item name="fontFamily">@font/poppins_semibold</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:lineHeight" tools:targetApi="28">32sp</item>
     </style>
 
     <style name="TextAppearance.Material3.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall" tools:ignore="ResourceCycle">
         <item name="fontFamily">@font/poppins_semibold</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineHeight" tools:targetApi="28">28sp</item>
     </style>
 
     <style name="TextAppearance.Material3.BodyMedium" parent="TextAppearance.Material3.BodyMedium" tools:ignore="ResourceCycle">
         <item name="fontFamily">@font/poppins_semibold</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight" tools:targetApi="28">20sp</item>
     </style>
 
     <style name="TextAppearance.Material3.BodyLarge" parent="TextAppearance.Material3.BodyLarge" tools:ignore="ResourceCycle">
         <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight" tools:targetApi="28">24sp</item>
     </style>
 
     <style name="TextAppearance.Material3.LabelMedium" parent="TextAppearance.Material3.LabelMedium" tools:ignore="ResourceCycle">
         <item name="fontFamily">@font/poppins_medium</item>
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight" tools:targetApi="28">20sp</item>
     </style>
 
     <style name="TextAppearance.Material3.LabelLarge" parent="TextAppearance.Material3.LabelLarge" tools:ignore="ResourceCycle">
         <item name="fontFamily">@font/poppins_medium</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight" tools:targetApi="28">24sp</item>
     </style>
 </resources>

@@ -20,11 +20,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    init {
-        getMealsByCategory("Beef")
-    }
-
-    private fun getMealsByCategory(category: String) {
+    fun getMealsByCategory(category: String) {
         Log.d(TAG, "getMealsByCategory: $category")
         viewModelScope.launch {
             _isLoading.value = true
