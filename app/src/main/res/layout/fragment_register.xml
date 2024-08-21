@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.main.Auth.RegisterFragment">
+    tools:context=".presentation.auth.RegisterFragment">
     <ImageView
         android:id="@+id/img_quarter_circle_orange"
         android:layout_width="wrap_content"
@@ -133,7 +133,7 @@
         android:backgroundTint="@color/primary"
         android:layout_marginBottom="40dp"
         android:text="Sign Up"
-        android:theme="@style/TextAppearance.Material3.BodyLarge."
+        style="@style/TextAppearance.Material3.BodyLarge"
         android:textStyle="bold"
         />
     <TextView

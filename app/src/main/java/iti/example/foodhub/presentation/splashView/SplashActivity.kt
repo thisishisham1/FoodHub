@@ -40,7 +40,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         animateLogo()
-        viewModel.navigateToMain()
+        viewModel.navigateToAuth()
     }
 
     private fun animateLogo() {
@@ -78,7 +78,7 @@ class SplashActivity : AppCompatActivity() {
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     Handler(Looper.getMainLooper()).postDelayed({
-                        viewModel.navigateToMain()
+                        viewModel.navigateToAuth()
                     }, 500)
                     super.onAnimationEnd(animation)
                 }
