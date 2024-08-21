@@ -10,18 +10,15 @@ import iti.example.foodhub.R
 
 data class Item(
     val name: String,
-    val recipe: String,
     val imageResId: Int = R.drawable.profile
 )
 
-class ItemsAdapter(
-    private val items: List<Item>,
-    private val isFavoriteRecyclerView: Boolean = false // Parameter to differentiate between RecyclerViews
-) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
+
+class ItemsAdapter(private val items: List<Item>) :
+    RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemNameTextView: TextView = itemView.findViewById(R.id.itemNameTextView)
-
         val itemImageView: ImageView = itemView.findViewById(R.id.itemImageView)
     }
 
@@ -32,18 +29,7 @@ class ItemsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-
-        // Adjust behavior based on which RecyclerView is being used
-        if (isFavoriteRecyclerView) {
-            // Customize binding logic for favRecyclerView, if needed
-            holder.itemNameTextView.text = item.name
-
-        } else {
-            // Default binding logic for the other RecyclerView
-            holder.itemNameTextView.text = item.name
-           
-        }
-
+        holder.itemNameTextView.text = item.name
         holder.itemImageView.setImageResource(item.imageResId)
     }
 
