@@ -14,12 +14,14 @@ data class Item(
     val imageResId: Int = R.drawable.profile
 )
 
-
-class ItemsAdapter(private val items: List<Item>) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
+class ItemsAdapter(
+    private val items: List<Item>,
+    private val isFavoriteRecyclerView: Boolean = false // Parameter to differentiate between RecyclerViews
+) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemNameTextView: TextView = itemView.findViewById(R.id.itemNameTextView)
-        val itemPriceTextView: TextView = itemView.findViewById(R.id.itemPriceTextView)
+        val itemRecipeTextView: TextView = itemView.findViewById(R.id.itemPriceTextView)
         val itemImageView: ImageView = itemView.findViewById(R.id.itemImageView)
     }
 
@@ -30,8 +32,18 @@ class ItemsAdapter(private val items: List<Item>) : RecyclerView.Adapter<ItemsAd
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        holder.itemNameTextView.text = item.name
-        holder.itemPriceTextView.text = item.recipe
+
+        // Adjust behavior based on which RecyclerView is being used
+        if (isFavoriteRecyclerView) {
+            // Customize binding logic for favRecyclerView, if needed
+            holder.itemNameTextView.text = item.name
+            holder.itemRecipeTextView.text = "Favorite Recipe: ${item.recipe}"
+        } else {
+            // Default binding logic for the other RecyclerView
+            holder.itemNameTextView.text = item.name
+            holder.itemRecipeTextView.text = item.recipe
+        }
+
         holder.itemImageView.setImageResource(item.imageResId)
     }
 

@@ -21,11 +21,11 @@ class FavoriteFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_favorite, container, false)
 
         // Initialize RecyclerView inside onCreateView where 'view' is accessible
-        val recyclerView = view.findViewById<RecyclerView>(R.id.favrecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        val favRecyclerView = view.findViewById<RecyclerView>(R.id.favrecyclerView)
+        favRecyclerView.layoutManager = LinearLayoutManager(context)
 
         // Sample data
-        val items = listOf(
+        val favItems = listOf(
             Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
             Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
             Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
@@ -36,8 +36,9 @@ class FavoriteFragment : Fragment() {
         )
 
         // Set up the adapter with the data
-        val adapter = ItemsAdapter(items)
-        recyclerView.adapter = adapter
+        val favAdapter = ItemsAdapter(favItems, isFavoriteRecyclerView = true)
+        favRecyclerView.adapter = favAdapter
+
 
         return view
     }
