@@ -29,15 +29,15 @@
                 android:layout_gravity="center"
                 android:text="@string/favourites"
                 android:textColor="@color/black"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                style="@style/TextAppearance.Material3.HeadlineSmall"
+                />
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- RecyclerView for scrolling content -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/favrecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
