@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
-                android:backgroundTint="@android:color/transparent"
+                android:backgroundTint="@android:color/white"
                 android:theme="?attr/actionBarTheme">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -105,14 +105,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/titleTextView" >
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="package iti.example.foodhub.presentation.main.fav&#xA;&#xA;import android.os.Bundle&#xA;import android.view.LayoutInflater&#xA;import android.view.View&#xA;import android.view.ViewGroup&#xA;import androidx.fragment.app.Fragment&#xA;import androidx.recyclerview.widget.LinearLayoutManager&#xA;import androidx.recyclerview.widget.RecyclerView&#xA;import iti.example.foodhub.R&#xA;import iti.example.foodhub.presentation.main.home.Item&#xA;import iti.example.foodhub.presentation.main.home.ItemsAdapter&#xA;&#xA;class FavoriteFragment : Fragment() {&#xA;&#xA;    override fun onCreateView(&#xA;        inflater: LayoutInflater, container: ViewGroup?,&#xA;        savedInstanceState: Bundle?&#xA;    ): View? {&#xA;        // Inflate the layout for this fragment&#xA;        val view = inflater.inflate(R.layout.fragment_favorite, container, false)&#xA;&#xA;        // Initialize RecyclerView inside onCreateView where &apos;view&apos; is accessible&#xA;        val recyclerView = view.findViewById&lt;RecyclerView>(R.id.favrecyclerView)&#xA;        recyclerView.layoutManager = LinearLayoutManager(context)&#xA;&#xA;        // Sample data&#xA;        val items = listOf(&#xA;            Item(&quot;Chicken Hawaiian&quot;, &quot;Chicken, Cheese and pineapple&quot;),&#xA;            Item(&quot;Chicken Hawaiian&quot;, &quot;Chicken, Cheese and pineapple&quot;),&#xA;            Item(&quot;Chicken Hawaiian&quot;, &quot;Chicken, Cheese and pineapple&quot;),&#xA;            Item(&quot;Chicken Hawaiian&quot;, &quot;Chicken, Cheese and pineapple&quot;),&#xA;            Item(&quot;Item 1&quot;, &quot;$10.00&quot;),&#xA;            Item(&quot;Item 2&quot;, &quot;$20.00&quot;),&#xA;            Item(&quot;Item 3&quot;, &quot;$30.00&quot;)&#xA;        )&#xA;&#xA;        // Set up the adapter with the data&#xA;        val adapter = ItemsAdapter(items)&#xA;        recyclerView.adapter = adapter&#xA;&#xA;        return view&#xA;    }&#xA;}&#xA;" />
-            </androidx.recyclerview.widget.RecyclerView>
+                app:layout_constraintTop_toBottomOf="@id/titleTextView" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -20,25 +20,26 @@ class FavoriteFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_favorite, container, false)
 
-        // Initialize RecyclerView inside onCreateView where 'view' is accessible
+        // Initialize RecyclerView
         val favRecyclerView = view.findViewById<RecyclerView>(R.id.favrecyclerView)
-        favRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        // Sample data
-        val favItems = listOf(
-            Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
-            Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
-            Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
-            Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
-            Item("Item 1", "$10.00"),
-            Item("Item 2", "$20.00"),
-            Item("Item 3", "$30.00")
-        )
+        // Ensure favRecyclerView is not null
+        favRecyclerView?.apply {
+            layoutManager = LinearLayoutManager(requireContext())
 
-        // Set up the adapter with the data
-        val favAdapter = ItemsAdapter(favItems, isFavoriteRecyclerView = true)
-        favRecyclerView.adapter = favAdapter
+            // Sample data
+            val favItems = listOf(
+                Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
+                Item("BBQ Chicken Pizza", "BBQ sauce, Chicken, and Cheese"),
+                Item("Veggie Delight", "Bell peppers, Olives, and Onions"),
+                Item("Pepperoni Pizza", "Pepperoni, Cheese, and Tomato sauce"),
+                Item("Margherita Pizza", "Tomato, Basil, and Mozzarella"),
+                Item("Meat Lover's Pizza", "Sausage, Bacon, and Ham")
+            )
 
+            // Set up the adapter with the data
+            adapter = ItemsAdapter(favItems, isFavoriteRecyclerView = true)
+        }
 
         return view
     }

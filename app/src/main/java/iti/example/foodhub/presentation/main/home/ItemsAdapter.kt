@@ -21,7 +21,7 @@ class ItemsAdapter(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemNameTextView: TextView = itemView.findViewById(R.id.itemNameTextView)
-        val itemRecipeTextView: TextView = itemView.findViewById(R.id.itemPriceTextView)
+
         val itemImageView: ImageView = itemView.findViewById(R.id.itemImageView)
     }
 
@@ -37,11 +37,11 @@ class ItemsAdapter(
         if (isFavoriteRecyclerView) {
             // Customize binding logic for favRecyclerView, if needed
             holder.itemNameTextView.text = item.name
-            holder.itemRecipeTextView.text = "Favorite Recipe: ${item.recipe}"
+
         } else {
             // Default binding logic for the other RecyclerView
             holder.itemNameTextView.text = item.name
-            holder.itemRecipeTextView.text = item.recipe
+           
         }
 
         holder.itemImageView.setImageResource(item.imageResId)

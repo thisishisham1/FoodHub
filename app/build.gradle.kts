@@ -55,14 +55,29 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
     // Navigation components
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+
     // Room components
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
+
     // Lifecycle components
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
+
+    // Retrofit components
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+    // OkHttp for network requests
+    implementation(libs.okhttp3)
+    implementation(libs.okhttp3.interceptor)
+
+    // Glide for image loading
+    implementation(libs.glide)
+    ksp(libs.compiler)
 }

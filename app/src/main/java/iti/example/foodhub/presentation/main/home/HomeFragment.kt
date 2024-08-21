@@ -36,14 +36,11 @@ class HomeFragment : Fragment() {
 
         val items = listOf(
             Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
-            Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
-            Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
-            Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
-            Item("Chicken Hawaiian", "Chicken, Cheese and pineapple"),
-            Item("Item 3", "$30.00"),
-            Item("Item 1", "$10.00"),
-            Item("Item 2", "$20.00"),
-            Item("Item 3", "$30.00")
+            Item("BBQ Chicken Pizza", "BBQ sauce, Chicken, and Cheese"),
+            Item("Veggie Delight", "Bell peppers, Olives, and Onions"),
+            Item("Pepperoni Pizza", "Pepperoni, Cheese, and Tomato sauce"),
+            Item("Margherita Pizza", "Tomato, Basil, and Mozzarella"),
+            Item("Meat Lover's Pizza", "Sausage, Bacon, and Ham")
         )
 
         val adapter = ItemsAdapter(items)
