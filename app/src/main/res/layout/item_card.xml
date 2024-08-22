@@ -1,56 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_card"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
+    android:clickable="true"
     app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       >
-        <ImageView
+        android:layout_height="wrap_content">
 
-            android:id="@+id/itemImageView"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/frameLayout"
             android:layout_width="0dp"
             android:layout_height="140dp"
-            android:scaleType="centerCrop"
-            android:background="@drawable/meal_image"
+            app:cardCornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/itemImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/meal_image"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/grey"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="20dp">
+
+                <ImageView
+                    android:id="@+id/favoriteIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:contentDescription="Favorite"
+                    android:src="@drawable/baseline_favorite_24" />
+            </androidx.cardview.widget.CardView>
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/itemNameTextView"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:maxLines="1"
-            style="@style/TextAppearance.Material3.HeadlineSmall"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/itemImageView"
-            tools:text="Item Name" />
-
-        <TextView
-            android:id="@+id/itemPriceTextView"
-            style="@style/TextAppearance.Material3.BodyLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/grey"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/itemNameTextView"
-            app:layout_constraintTop_toBottomOf="@id/itemNameTextView"
-            tools:text="$10.00" />
+            app:layout_constraintTop_toBottomOf="@id/frameLayout"
+            tools:text="Item Name"
+            tools:ignore="NotSibling" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
