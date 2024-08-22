@@ -6,17 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import iti.example.foodhub.R
+import iti.example.foodhub.databinding.FragmentAboutBinding
 
 
 class AboutFragment : Fragment() {
-
-
+    private lateinit var binding: FragmentAboutBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about, container, false)
+        binding = FragmentAboutBinding.inflate(layoutInflater,container,false)
+        return binding.root
     }
-
 }
