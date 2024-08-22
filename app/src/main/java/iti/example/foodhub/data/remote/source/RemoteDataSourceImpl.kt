@@ -2,7 +2,6 @@ package iti.example.foodhub.data.remote.source
 
 import iti.example.foodhub.data.remote.MealsService
 import iti.example.foodhub.data.remote.responseModel.Meals
-import iti.example.foodhub.data.remote.responseModel.ResponseDetailsModel
 import iti.example.foodhub.data.remote.responseModel.ResponseMealsModel
 import retrofit2.Response
 

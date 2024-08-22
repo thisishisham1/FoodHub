@@ -13,5 +13,8 @@
     <string name="password">Password</string>
     <string name="e_mail">E-mail</string>
     <string name="sign_up">Sign Up</string>
+    <string name="see_more">see_more</string>
+    <string name="description">This is a description of the recipe.,is a description of the recipe. is a description of the recipe.,is a description of the recipe. is a description of the recipe.,is a description of the recipe.</string>
+    <string name="see_less">see_less\n</string>
 
 </resources>
