@@ -8,14 +8,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import iti.example.foodhub.data.remote.responseModel.Meal
 import iti.example.foodhub.data.repository.HomeRepository
+import iti.example.foodhub.presentation.mappper.toUiModel
+import iti.example.foodhub.presentation.model.MealUiModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 private const val TAG = "HomeViewModel"
 
 class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
-    private var _meals = MutableLiveData<List<Meal>>()
-    val meals: LiveData<List<Meal>> = _meals
+    private var _meals = MutableLiveData<List<MealUiModel>>()
+    val meals: LiveData<List<MealUiModel>> = _meals
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -27,7 +29,9 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
             runBlocking {
                 val response = homeRepository.getMealsByCategory(category)
                 if (response.isSuccessful) {
-                    _meals.value = response.body()?.meals.orEmpty()
+                    _meals.value = response.body()?.meals?.map {
+                        it.toUiModel(false)
+                    }
                     Log.d(TAG, "getMealsByCategory: success")
                     Log.d(TAG, "getMealsByCategory: ${meals.value?.size}")
                 } else {

@@ -10,6 +10,7 @@ import android.widget.ProgressBar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
@@ -77,9 +78,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeViewModel(view: View) {
+        val adapter = ItemsAdapter { item ->
+            val action =
+                HomeFragmentDirections.actionHomeFragmentToDetailsFragment(item.idMeal.toInt())
+            view.findNavController().navigate(action)
+        }
+        view.findViewById<RecyclerView>(R.id.orderRecyclerView).adapter = adapter
+
         viewModel.meals.observe(viewLifecycleOwner) { items ->
-            val adapter = ItemsAdapter(items)
-            view.findViewById<RecyclerView>(R.id.orderRecyclerView).adapter = adapter
+            adapter.submitList(items)
         }
     }
 
