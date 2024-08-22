@@ -1,57 +1,39 @@
 package iti.example.foodhub.viewModel.Details
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import iti.example.foodhub.data.remote.responseModel.Meals
+import iti.example.foodhub.data.remote.source.RemoteDataSourceImpl
 import iti.example.foodhub.data.repository.DetailsRepositry
+import iti.example.foodhub.presentation.mappper.DetailsUiModelMapper
+import iti.example.foodhub.presentation.model.DetailsUiModel
 import kotlinx.coroutines.launch
 
-class DetailsViewModel (private val productRepository:DetailsRepositry) : ViewModel() {
-    private val _mealList = MutableLiveData<List<Meals>>()
-    val mealList: LiveData<List<Meals>> get() = _mealList
+class MealDetailsViewModel(private val detailsRepository: DetailsRepositry,
+    private val mapper : DetailsUiModelMapper
+) : ViewModel() {
 
-    private val _detailsList = MutableLiveData<List<String>>()
-    val detailsList: LiveData<List<String>> get() = _detailsList
+    private val _mealDetails = MutableLiveData<DetailsUiModel>()
+    val mealDetails: MutableLiveData<DetailsUiModel> get() = _mealDetails
 
-    init {
-        getMeals()
-    }
-
-    private fun getMeals() {
+    fun getMealDetails(id: String) {
         viewModelScope.launch {
-            _mealList.value = productRepository.getProducts()
+            val meal = detailsRepository.getProductById(id)
+
+            _mealDetails.value=mapper.mapToUiModel(meal)
         }
     }
-
-    fun getDetails(id: Int) {
-        viewModelScope.launch {
-            val meal = productRepository.getProductById(id)
-            _detailsList.value = when (meal.strImageSource) {
-                is List<*> -> meal.strImageSource as List<String>
-                is String -> listOf(meal.strImageSource)
-                else -> emptyList()
-            }
-        }
-    }
-
 }
-class AllMealsViewModelFactory(private val productRepository: DetailsRepositry) : ViewModelProvider.Factory {
+
+class MealDetailsViewModelFactory(private val detailsRepository: RemoteDataSourceImpl,
+                                  private val mapper: DetailsUiModelMapper) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(DetailsViewModel::class.java)) {
-            return AllMealsViewModelFactory(productRepository) as T
+        if (modelClass.isAssignableFrom(MealDetailsViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return MealDetailsViewModel(detailsRepository,mapper) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-
 }
-/*
-    fun getDetails(id: Int) {
-        viewModelScope.launch {
-            val meal = productRepository.getProductById(id)
-            _detailsList.value = meal.strImageSource?: emptyList()
-        }
-    }
-    */
+

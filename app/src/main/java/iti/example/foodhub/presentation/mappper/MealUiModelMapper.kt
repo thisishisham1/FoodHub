@@ -8,4 +8,5 @@ fun Meal.toUiModel(isFavorite: Boolean) = MealUiModel(
     strMealThumb = strMealThumb,
     idMeal = idMeal,
     isFavorite = isFavorite,
+
 )

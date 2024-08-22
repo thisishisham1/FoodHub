@@ -8,8 +8,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
 import iti.example.foodhub.R
+import iti.example.foodhub.data.remote.retrofit.RetrofitService
+import iti.example.foodhub.data.remote.source.RemoteDataSourceImpl
+import iti.example.foodhub.databinding.FragmentDetailsBinding
+import iti.example.foodhub.viewModel.Details.MealDetailsViewModel
+import iti.example.foodhub.viewModel.Details.MealDetailsViewModelFactory
 
 class DetailsFragment : Fragment() {
+    private lateinit var viewModel: MealDetailsViewModel
+    private lateinit var _binding: FragmentDetailsBinding
+    private val binding get() = _binding
 
     private lateinit var backArrow: ImageView
     private lateinit var favoriteButton: ImageView
@@ -20,7 +28,18 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_details, container, false)
+        return inflater.inflate(R.layout.fragment_details, container, false)
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding=FragmentDetailsBinding.bind(view)
+        val MealsId=arguments?.getString("id")
+
+        val detailsRepositry=RemoteDataSourceImpl(RetrofitService.mealsService)
+       // val viewModelFactory=MealDetailsViewModelFactory(detailsRepositry)
+
 
         // Initialize views using the inflated view
         backArrow = view.findViewById(R.id.back_arrow)
@@ -40,6 +59,7 @@ class DetailsFragment : Fragment() {
             // Save the favorite status to your database here
         }
 
-        return view
     }
+
+
 }

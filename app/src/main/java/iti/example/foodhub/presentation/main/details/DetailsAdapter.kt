@@ -6,10 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import iti.example.foodhub.data.remote.responseModel.Meal
 import iti.example.foodhub.data.remote.responseModel.Meals
-import iti.example.foodhub.data.remote.responseModel.ResponseDetailsModel
 import iti.example.foodhub.databinding.ItemCardBinding
 
-class DetailsAdapter (private var mealList: List<Meals>) :
+class DetailsAdapter/* (private var mealList: List<Meals>) :
     RecyclerView.Adapter<DetailsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,4 +35,4 @@ class DetailsAdapter (private var mealList: List<Meals>) :
     }
 
     inner class ViewHolder(val binding: ItemCardBinding) : RecyclerView.ViewHolder(binding.root)
-}
+}*/

@@ -1,15 +1,12 @@
 package iti.example.foodhub.data.remote.responseModel
 
-data class ResponseDetailsModel(
-
-    val responseDetailsModel:List<Meals>
-)
 data class Meals(
     val idMeal: String,
     val strMeal: String,
     val strMealThumb: String,
-    val strImageSource: Any?,
     val strYoutube: String,
+    val strInstructions  : String,
+    val strImageSource: Any?,
     val strIngredient1: String,
     val strIngredient2: String,
     val strIngredient3: String,
@@ -33,4 +30,3 @@ data class Meals(
     val strSource: Any?,
     val dateModified: Any?,
 )
-
