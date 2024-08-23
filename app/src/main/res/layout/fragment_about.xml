@@ -52,26 +52,26 @@
             android:orientation="vertical"
             android:padding="20dp"
             >
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Abdallah"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="Faten"
                 android:textColor="@color/primary"
-                android:layout_weight="1"
-                android:padding="10dp"
-                />
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Al-Adham"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
                 android:layout_weight="1"
                 android:padding="10dp"
-                />
+                android:text="Safwat"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
@@ -223,26 +223,26 @@
                 android:orientation="vertical"
                 android:padding="20dp"
                 >
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Faten"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="Abdallah"
                     android:textColor="@color/primary"
-                    android:layout_weight="1"
-                    android:padding="10dp"
-                    />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Safwat"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
                     android:layout_weight="1"
                     android:padding="10dp"
-                    />
+                    android:text="Al-Adham"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
