@@ -6,10 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import iti.example.foodhub.data.remote.responseModel.Meals
-import iti.example.foodhub.data.repository.DetailsRepository
+
 import iti.example.foodhub.data.repository.HomeRepository
-import iti.example.foodhub.presentation.mappper.toDetailsUi
-import iti.example.foodhub.presentation.model.DetailsUiModel
 import kotlinx.coroutines.launch
 
 class MealDetailsViewModel(
@@ -19,15 +17,14 @@ class MealDetailsViewModel(
     private val _mealDetails = MutableLiveData<Meals>()//<DetailsUiModel>()
     val mealDetails: MutableLiveData<Meals> get() = _mealDetails
 
-    init {
-        getMealDetails("52772")
-    }
 
-    fun getMealDetails(id: String) {
+    fun getMealDetails(i: String) {
         viewModelScope.launch {
-            Log.d("DetailsViewModel", "getMealDetails: entered")
-            _mealDetails.value = homeRepository.getProductById(id)
-            Log.d("DetailsViewModel", "getMealDetails: closed")
+
+
+            _mealDetails.value = homeRepository.getMealsById(i)
+
+
         }
     }
 }

@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide
 import iti.example.foodhub.R
 import iti.example.foodhub.data.remote.retrofit.RetrofitService
 import iti.example.foodhub.data.remote.source.RemoteDataSourceImpl
-import iti.example.foodhub.data.repository.DetailsRepository
 import iti.example.foodhub.data.repository.HomeRepository
 import iti.example.foodhub.databinding.FragmentDetailsBinding
 import iti.example.foodhub.viewModel.Details.MealDetailsViewModel
@@ -42,7 +41,6 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_details, container, false)
     }
 
@@ -50,7 +48,7 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mealsId = arguments?.getString("id") ?: ""
+        val mealsId = arguments?.getString("i") ?: ""
         viewModel.getMealDetails(mealsId)
 
         findId(view)
@@ -59,10 +57,8 @@ class DetailsFragment : Fragment() {
 
 
         viewModel.mealDetails.observe(viewLifecycleOwner) { mealsId ->
-            Glide.with(this).load(mealsId.strMealThumb).into(foodImageView)
+           Glide.with(this).load(mealsId.strMealThumb).into(foodImageView)
 
-
-            //handle drscription
 
             foodDescription.text = mealsId.strInstructions
 
@@ -82,10 +78,7 @@ class DetailsFragment : Fragment() {
 
 
     }
-    private fun initId()
-    {
 
-    }
     private fun findId(view: View) {
         foodImageView = view.findViewById(R.id.food_image)
         foodDescription = view.findViewById(R.id.food_description)
@@ -117,11 +110,6 @@ class DetailsFragment : Fragment() {
 }
 
 
-
-
-//val mealsRepositry=RemoteDataSourceImpl(RetrofitService.mealsService)
-// val viewModelFactory=MealDetailsViewModelFactory(mealsRepositry)
-// viewModel=ViewModelProvider(this,MealDetailsViewModelFactory).get(MealDetailsViewModel::class.java)
 
 
 

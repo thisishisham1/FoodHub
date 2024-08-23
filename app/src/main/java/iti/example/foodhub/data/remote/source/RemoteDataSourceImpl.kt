@@ -11,8 +11,8 @@ class RemoteDataSourceImpl(private val mealsService: MealsService) : RemoteDataS
         return mealsService.getMealsByCategory(category)
     }
 
-    override suspend fun getProductById(id: String):Meals {
-        return mealsService.getProductById(id)
+    override suspend fun getMealsById(i: String):Meals {
+        return mealsService.getMealsById(i)
     }
 
 }

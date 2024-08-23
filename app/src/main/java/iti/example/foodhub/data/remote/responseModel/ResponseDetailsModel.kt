@@ -6,7 +6,22 @@ data class Meals(
     val strMealThumb: String,
     val strYoutube: String,
     val strInstructions  : String,
-    /*val strImageSource: Any?,
+
+)
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ val strImageSource: Any?,
     val strIngredient1: String,
     val strIngredient2: String,
     val strIngredient3: String,
@@ -28,5 +43,5 @@ data class Meals(
     val strIngredient19: Any?,
     val strIngredient20: Any?,
     val strSource: Any?,
-    val dateModified: Any?,*/
-)
+    val dateModified: Any?,
+ */
