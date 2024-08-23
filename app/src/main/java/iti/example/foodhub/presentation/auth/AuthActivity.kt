@@ -1,10 +1,8 @@
 package iti.example.foodhub.presentation.auth
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.fragment.NavHostFragment
 import iti.example.foodhub.R
 import iti.example.foodhub.databinding.ActivityAuthBinding
 
@@ -13,9 +11,12 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityAuthBinding.inflate(layoutInflater).apply {
-            setContentView(root)
-        }
+        setContentView(R.layout.activity_auth)
 
+        // Safe casting of NavHostFragment using the correct ID
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
+            ?: throw IllegalStateException("NavHostFragment not found")
+
+        val navController = navHostFragment.navController
     }
 }
