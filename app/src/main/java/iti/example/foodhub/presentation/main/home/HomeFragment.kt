@@ -10,8 +10,10 @@ import android.widget.ProgressBar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayout
 import iti.example.foodhub.R
 import iti.example.foodhub.data.remote.retrofit.RetrofitService
 import iti.example.foodhub.data.remote.source.RemoteDataSourceImpl
@@ -28,6 +30,24 @@ class HomeFragment : Fragment() {
         HomeViewModelFactory(homeRepository)
     }
 
+    private val categories =
+        listOf(
+            "Starter",
+            "Breakfast",
+            "Beef",
+            "Chicken",
+            "Dessert",
+            "Lamb",
+            "Miscellaneous",
+            "Pasta",
+            "Pork",
+            "Seafood",
+            "Side",
+            "Vegan",
+            "Vegetarian",
+            "Goat",
+        )
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,6 +59,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupDrawer()
         setupRecyclerView(view)
+        setupTabs(view)
         observeViewModel(view)
     }
 
@@ -53,17 +74,38 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerView(view: View) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.orderRecyclerView)
-        recyclerView?.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     private fun observeViewModel(view: View) {
-        val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
+        val adapter = ItemsAdapter { item ->
+            val action =
+                HomeFragmentDirections.actionHomeFragmentToDetailsFragment(item.idMeal.toInt())
+            view.findNavController().navigate(action)
+        }
+        view.findViewById<RecyclerView>(R.id.orderRecyclerView).adapter = adapter
+
         viewModel.meals.observe(viewLifecycleOwner) { items ->
-            val adapter = ItemsAdapter(items)
-            view.findViewById<RecyclerView>(R.id.orderRecyclerView)?.adapter = adapter
+            adapter.submitList(items)
         }
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun setupTabs(view: View) {
+        val tabLayout = view.findViewById<TabLayout>(R.id.tabLayout)
+        categories.forEach { category ->
+            tabLayout.addTab(tabLayout.newTab().setText(category))
         }
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.text?.let { viewModel.getMealsByCategory(it.toString()) }
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                tab?.text?.let { viewModel.getMealsByCategory(it.toString()) }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+        })
+        tabLayout.getTabAt(0)?.select()
     }
 }
