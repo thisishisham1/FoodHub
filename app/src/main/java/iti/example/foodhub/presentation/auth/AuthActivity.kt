@@ -5,18 +5,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import iti.example.foodhub.R
 import iti.example.foodhub.databinding.ActivityAuthBinding
+import iti.example.foodhub.viewModel.authentication.AuthViewModel
 
 class AuthActivity : AppCompatActivity() {
-    lateinit var binding: ActivityAuthBinding
+    private lateinit var viewModel: AuthViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
 
-        // Safe casting of NavHostFragment using the correct ID
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
-            ?: throw IllegalStateException("NavHostFragment not found")
-
-        val navController = navHostFragment.navController
+        // Assuming you have set up your ViewModel with the repository
+        viewModel.checkUserExists("user@example.com",
+            onUserExists = {
+                // Navigate to login page
+            },
+            onUserNotExists = {
+                // Navigate to registration page
+            }
+        )
     }
 }
