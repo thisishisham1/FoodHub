@@ -24,13 +24,22 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).apply {
             setContentView(root)
             setupWindowInsets()
-            val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment
-            val navController = navHostFragment.navController
+        }
+        supportFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, HomeFragment()).commit()
 
-            bottomNav.setupWithNavController(navController)
+        binding.bottomNav.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.home -> navigateFragment(HomeFragment())
+                R.id.search -> navigateFragment(SearchFragment())
+                R.id.profile -> navigateFragment(AboutFragment())
+                R.id.favorite -> navigateFragment(FavoriteFragment())
+            }
+            true
         }
     }
-
+    private fun navigateFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, fragment).commit()
+    }
     private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
