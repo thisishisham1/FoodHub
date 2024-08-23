@@ -11,21 +11,26 @@ import android.widget.MediaController
 import android.widget.TextView
 import android.widget.VideoView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import iti.example.foodhub.R
 import iti.example.foodhub.data.remote.retrofit.RetrofitService
 import iti.example.foodhub.data.remote.source.RemoteDataSourceImpl
+import iti.example.foodhub.data.repository.DetailsRepository
+import iti.example.foodhub.data.repository.HomeRepository
 import iti.example.foodhub.databinding.FragmentDetailsBinding
-import iti.example.foodhub.presentation.model.DetailsUiModel
 import iti.example.foodhub.viewModel.Details.MealDetailsViewModel
 import iti.example.foodhub.viewModel.Details.MealDetailsViewModelFactory
 
 class DetailsFragment : Fragment() {
-    private lateinit var viewModel: MealDetailsViewModel
+    private val homeRepository: HomeRepository =
+        HomeRepository(RemoteDataSourceImpl(RetrofitService.mealsService))
+
+    private val viewModel: MealDetailsViewModel by viewModels(
+        factoryProducer = { MealDetailsViewModelFactory(homeRepository) }
+    )
     private lateinit var _binding: FragmentDetailsBinding
-   // private val binding get() = _binding
+    // private val binding get() = _binding
 
     private lateinit var backArrow: ImageView
     private lateinit var favoriteButton: ImageView
@@ -67,11 +72,9 @@ class DetailsFragment : Fragment() {
             val mealsId = arguments?.getString("id") ?: ""
             viewModel.getMealDetails(mealsId)
 
-            viewModel.mealDetails.observe(viewLifecycleOwner)
-            { mealsId ->
+            viewModel.mealDetails.observe(viewLifecycleOwner) { mealsId ->
                 Glide.with(this).load(mealsId.strMealImages).into(foodImageView)
 
-                //handle description
 
                 foodDescription.text = mealsId.strDescription
 
@@ -113,19 +116,6 @@ class DetailsFragment : Fragment() {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //val mealsRepositry=RemoteDataSourceImpl(RetrofitService.mealsService)
