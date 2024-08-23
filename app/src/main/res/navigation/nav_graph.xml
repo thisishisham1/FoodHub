@@ -27,22 +27,4 @@
         android:name="iti.example.foodhub.presentation.auth.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="iti.example.foodhub.presentation.main.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/detailsFragment"
-        android:name="iti.example.foodhub.presentation.main.details.DetailsFragment"
-        android:label="fragment_details"
-        tools:layout="@layout/fragment_details" >
-        <argument
-            android:name="id"
-            app:argType="integer" />
-    </fragment>
 </navigation>
