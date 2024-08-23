@@ -80,7 +80,7 @@ class HomeFragment : Fragment() {
     private fun observeViewModel(view: View) {
         val adapter = ItemsAdapter { item ->
             val action =
-                HomeFragmentDirections.actionHomeFragmentToDetailsFragment(item.idMeal.toInt())
+                HomeFragmentDirections.actionHomeFragmentToDetailsFragment(item.idMeal)
             view.findNavController().navigate(action)
         }
         view.findViewById<RecyclerView>(R.id.orderRecyclerView).adapter = adapter

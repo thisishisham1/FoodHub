@@ -15,5 +15,5 @@ interface MealsService {
     //suspend fun getMeals():ResponseMealsModel
 
     @GET("products/{id}")
-    suspend fun getMealsById(@Path("id") id: Int): Meals
+    suspend fun getProductById(@Path("id") id: String): Meals
 }

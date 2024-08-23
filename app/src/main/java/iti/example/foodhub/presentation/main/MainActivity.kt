@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import iti.example.foodhub.R
 import iti.example.foodhub.databinding.ActivityMainBinding
 import iti.example.foodhub.presentation.main.about.AboutFragment
@@ -22,16 +24,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).apply {
             setContentView(root)
             setupWindowInsets()
-            supportFragmentManager.beginTransaction().replace(R.id.content_frame, HomeFragment()).commit()
-            bottomNav.setOnItemSelectedListener {
-                when (it.itemId) {
-                    R.id.home -> navigateFragment(HomeFragment())
-                    R.id.search -> navigateFragment(SearchFragment())
-                    R.id.profile -> navigateFragment(AboutFragment())
-                    R.id.favorite -> navigateFragment(FavoriteFragment())
-                }
-                true
-            }
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment
+            val navController = navHostFragment.navController
+
+            bottomNav.setupWithNavController(navController)
         }
     }
 
@@ -41,11 +37,5 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-    }
-
-    private fun navigateFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.content_frame, fragment)
-            .commit()
     }
 }

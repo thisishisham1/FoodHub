@@ -32,8 +32,6 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     _meals.value = response.body()?.meals?.map {
                         it.toUiModel(false)
                     }
-                    Log.d(TAG, "getMealsByCategory: success")
-                    Log.d(TAG, "getMealsByCategory: ${meals.value?.size}")
                 } else {
                     Log.d(TAG, "getMealsByCategory: failed")
                 }
