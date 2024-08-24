@@ -2,6 +2,7 @@ package iti.example.foodhub.data.remote
 
 import android.telecom.Call
 import iti.example.foodhub.data.remote.responseModel.Meals
+import iti.example.foodhub.data.remote.responseModel.ResponseDetailsModel
 import iti.example.foodhub.data.remote.responseModel.ResponseMealsModel
 import retrofit2.Response
 import retrofit2.http.GET
@@ -14,5 +15,5 @@ interface MealsService {
     suspend fun getMealsByCategory(@Query("c") category: String): Response<ResponseMealsModel>
 
     @GET("lookup.php")
-   suspend fun getMealsById(@Query("i") mealId: String):Meals
+   suspend fun getMealsById(@Query("i") mealId: String):ResponseDetailsModel
 }

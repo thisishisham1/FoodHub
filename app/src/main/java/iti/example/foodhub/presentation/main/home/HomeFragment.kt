@@ -19,7 +19,7 @@ import iti.example.foodhub.R
 import iti.example.foodhub.data.remote.retrofit.RetrofitService
 import iti.example.foodhub.data.remote.source.RemoteDataSourceImpl
 import iti.example.foodhub.data.repository.HomeRepository
-import iti.example.foodhub.presentation.main.details.DetailsActivity
+import iti.example.foodhub.presentation.main.details.DetailsFragment
 import iti.example.foodhub.viewModel.home.HomeViewModel
 import iti.example.foodhub.viewModel.home.HomeViewModelFactory
 
@@ -82,10 +82,8 @@ class HomeFragment : Fragment() {
         val adapter = ItemsAdapter(onFavoriteClick = { mealUiModel ->
             viewModel.toggleFavorite(mealUiModel)
         }, onClick = {
-            Intent(requireContext(), DetailsActivity::class.java).apply {
-                putExtra("mealId", it.idMeal)
-                startActivity(this)
-            }
+            val intent=Intent(context,DetailsFragment::class.java)
+            startActivity(intent)
         })
         view.findViewById<RecyclerView>(R.id.orderRecyclerView).adapter = adapter
 
