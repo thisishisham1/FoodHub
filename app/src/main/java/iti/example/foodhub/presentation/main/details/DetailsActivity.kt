@@ -18,14 +18,6 @@ import iti.example.foodhub.viewModel.Details.MealDetailsViewModelFactory
 
 class DetailsActivity : AppCompatActivity() {
     private lateinit var binding:ActivityDetailsBinding
-
-    private val homeRepository: HomeRepository =
-        HomeRepository(RemoteDataSourceImpl(RetrofitService.mealsService))
-
-    private val viewModel: MealDetailsViewModel by viewModels(
-        factoryProducer = { MealDetailsViewModelFactory(homeRepository) }
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,5 +28,6 @@ class DetailsActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
     }
 }

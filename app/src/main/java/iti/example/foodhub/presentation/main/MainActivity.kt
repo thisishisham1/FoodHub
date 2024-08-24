@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import iti.example.foodhub.R
 import iti.example.foodhub.databinding.ActivityMainBinding
 import iti.example.foodhub.presentation.main.about.AboutFragment

@@ -1,6 +1,7 @@
 package iti.example.foodhub.viewModel.Details
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -17,26 +18,23 @@ class MealDetailsViewModel(
 ) : ViewModel() {
 
     private val _mealDetails = MutableLiveData<ResponseDetailsModel>()
-    val mealDetails: MutableLiveData<ResponseDetailsModel> get() = _mealDetails
-
-    init {
-        Log.d("MealDetailsViewModel", "start entered")
-        getMealDetails("52772")
-    }
+    val mealDetails: LiveData<ResponseDetailsModel> get() = _mealDetails
+    private val _isLoaded = MutableLiveData<Boolean>()
+    val isLoaded: LiveData<Boolean> get() = _isLoaded
 
 
     fun getMealDetails(i: String) {
         Log.d("MealDetailsViewModel", "getMealDetails() called with ID: $i")
         viewModelScope.launch {
-            Log.d("MealDetailsViewModel", "Coroutine launched$i")
+            _isLoaded.value = true
             try {
-                Log.d("MealDetailsViewModel", "Fetching meal details...")
                 val list = homeRepository.getMealsById(i)
-                _mealDetails.postValue(list)
-                Log.d("MealDetailsViewModel", "Meal details fetched successfully")
+                _mealDetails.value = list
             } catch (e: Exception) {
                 Log.e("MealDetailsViewModel", "Error fetching meal details", e)
             }
+            _isLoaded.value = false
+
         }
     }
 }
