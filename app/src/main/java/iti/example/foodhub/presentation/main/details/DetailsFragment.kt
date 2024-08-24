@@ -63,10 +63,10 @@ class DetailsFragment : Fragment() {
 
 
 
-        /*backArrow.setOnClickListener {
+        backArrow.setOnClickListener {
         val intent=Intent(context,HomeFragment::class.java)
            startActivity(intent)
-       }*/
+       }
 
         findId(view)
 
