@@ -28,10 +28,7 @@ class RegisterFragment : Fragment() {
 
         // Handle sign-up button click
         binding.btnSignup.setOnClickListener {
-            // Perform registration logic here (e.g., saving user data in the Room database)
 
-            // After successful registration, navigate to HomeFragment
-            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
     }
 
