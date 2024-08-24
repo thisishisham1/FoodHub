@@ -19,21 +19,17 @@ class MealDetailsViewModel(
 
     private val _mealDetails = MutableLiveData<ResponseDetailsModel>()
     val mealDetails: LiveData<ResponseDetailsModel> get() = _mealDetails
-    private val _isLoaded = MutableLiveData<Boolean>()
-    val isLoaded: LiveData<Boolean> get() = _isLoaded
 
 
     fun getMealDetails(i: String) {
         Log.d("MealDetailsViewModel", "getMealDetails() called with ID: $i")
         viewModelScope.launch {
-            _isLoaded.value = true
             try {
                 val list = homeRepository.getMealsById(i)
                 _mealDetails.value = list
             } catch (e: Exception) {
                 Log.e("MealDetailsViewModel", "Error fetching meal details", e)
             }
-            _isLoaded.value = false
 
         }
     }
