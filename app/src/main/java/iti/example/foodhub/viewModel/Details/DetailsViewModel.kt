@@ -14,15 +14,20 @@ class MealDetailsViewModel(
     private val homeRepository: HomeRepository
 ) : ViewModel() {
 
-    private val _mealDetails = MutableLiveData<Meals>()//<DetailsUiModel>()
+    private val _mealDetails = MutableLiveData<Meals>()
     val mealDetails: MutableLiveData<Meals> get() = _mealDetails
 
 
     fun getMealDetails(i: String) {
         viewModelScope.launch {
-
-
-            _mealDetails.value = homeRepository.getMealsById(i)
+            try {
+                val list=homeRepository.getMealsById(i)
+                _mealDetails.postValue(list)
+            }
+            catch(e:Exception)
+            {
+                e.message
+            }
 
 
         }

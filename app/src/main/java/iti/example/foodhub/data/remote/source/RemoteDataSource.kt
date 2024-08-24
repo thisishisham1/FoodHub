@@ -6,5 +6,5 @@ import retrofit2.Response
 
 interface RemoteDataSource {
     suspend fun getMealsByCategory(category: String): Response<ResponseMealsModel>
-    suspend fun getMealsById(i: String): Meals
+    suspend fun getMealsById(i: String):List< Meals>
 }

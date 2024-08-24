@@ -14,5 +14,5 @@ interface MealsService {
     suspend fun getMealsByCategory(@Query("c") category: String): Response<ResponseMealsModel>
 
     @GET("lookup.php")
-   suspend fun getMealsById(@Query("i") mealId: String):Meals
+   suspend fun getMealsById(@Query("i") mealId: String):List<Meals>
 }
