@@ -2,22 +2,22 @@ package iti.example.foodhub.presentation.main.details
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.MediaController
 import android.widget.TextView
-import android.widget.VideoView
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import iti.example.foodhub.R
 import iti.example.foodhub.data.remote.retrofit.RetrofitService
 import iti.example.foodhub.data.remote.source.RemoteDataSourceImpl
 import iti.example.foodhub.data.repository.HomeRepository
-import iti.example.foodhub.databinding.FragmentDetailsBinding
 import iti.example.foodhub.viewModel.Details.MealDetailsViewModel
 import iti.example.foodhub.viewModel.Details.MealDetailsViewModelFactory
 
@@ -29,12 +29,11 @@ class DetailsFragment : Fragment() {
         factoryProducer = { MealDetailsViewModelFactory(homeRepository) }
     )
 
-
     private lateinit var foodImageView: ImageView
-    lateinit var foodDescription: TextView
-    lateinit var mealVideoView: VideoView
-    lateinit var seeMoreTextView: TextView
-    lateinit var mealVideoController: MediaController
+    private lateinit var foodDescription: TextView
+    private lateinit var seeMoreTextView: TextView
+    private lateinit var youtubePlayerView: YouTubePlayerView
+    private lateinit var titleTextView: TextView
     private var isFavorite: Boolean = false
 
     override fun onCreateView(
@@ -44,84 +43,40 @@ class DetailsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_details, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("DetailsFragment", "onViewCreated called")
 
-       // val mealsId = arguments?.getString("i") ?: ""
-       // viewModel.getMealDetails(mealsId)
-
-       // findId(view)
-       // HandleBackDrawer()
-       // HandleFavouriteButton()
+        findId(view)
 
 
-        //viewModel.mealDetails.observe(viewLifecycleOwner) { mealsId ->
-            //Glide.with(this).load(mealsId.meals[0].strMealThumb).into(foodImageView)
+        // Fetch meal details
+        val mealsId = arguments?.getString("i") ?: "52772"
+        viewModel.getMealDetails(mealsId)
 
-
-            /* foodDescription.text = mealsId.strInstructions
-
-            // handle video
-            if (mealsId.strYoutube.isNotBlank()) {
-                val videoUri = Uri.parse(mealsId.strYoutube)
-                mealVideoView.setVideoURI(videoUri)
-                mealVideoController.setAnchorView(mealVideoView)
-
+        // Observe ViewModel data
+        viewModel.mealDetails.observe(viewLifecycleOwner) { mealDetails ->
+            val meal = mealDetails.meals[0]
+            Log.d("DetailsFragment", "Meal details observed: $meal")
+            Glide.with(this).load(meal.strMealThumb).into(foodImageView)
+            titleTextView.text = meal.strMeal
+            foodDescription.text = meal.strInstructions
+            if (meal.strYoutube.isNotBlank()) {
+                val videoId = Uri.parse(meal.strYoutube).getQueryParameter("v")
+                lifecycle.addObserver(youtubePlayerView)
+                youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                    override fun onReady(youTubePlayer: YouTubePlayer) {
+                        if (videoId != null) {
+                            youTubePlayer.cueVideo(videoId, 0f)
+                        }
+                    }
+                })
             } else {
-                mealVideoView.visibility = View.GONE
+                youtubePlayerView.visibility = View.GONE
             }
 
-
-
-
-
-*/
         }
     }
-/*
-    private fun findId(view: View) {
-        foodImageView = view.findViewById(R.id.food_image)
-        foodDescription = view.findViewById(R.id.food_description)
-        seeMoreTextView = view.findViewById(R.id.seeMoreTextView)
-        mealVideoView = view.findViewById(R.id.mealVideoView)
-        mealVideoController = view.findViewById(R.id.mediaController)
-
-    }
-
-    private fun HandleBackDrawer() {
-        val backArrow = view?.findViewById<ImageView>(R.id.back_arrow)
-        backArrow?.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
-    }
-
-    private fun HandleFavouriteButton() {
-        val favoriteButton = view?.findViewById<ImageView>(R.id.favorite_button)
-        favoriteButton?.setOnClickListener {
-            isFavorite = !isFavorite
-            val icon = if (isFavorite) R.drawable.baseline_favorite_24
-            else R.drawable.baseline_favorite_border_24
-            favoriteButton.setImageResource(icon)
-            // Save the favorite status to your database here
-        }
-
-    }
-}
-
-*/
 
 
 
-// handle see more
-/*var isExpanded = false
-seeMoreTextView.setOnClickListener {
-    isExpanded = !isExpanded
-    foodDescription.maxLines = if (isExpanded)
-        Int.MAX_VALUE else 3
-    seeMoreTextView.text = if (isExpanded) getString(R.string.see_more)
-    else getString(R.string.see_less)*/
-
-//get id
-// _binding = FragmentDetailsBinding.bind(view)

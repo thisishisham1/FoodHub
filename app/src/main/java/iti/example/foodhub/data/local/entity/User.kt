@@ -1,4 +1,4 @@
-package iti.example.foodhub.data.database
+package iti.example.foodhub.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

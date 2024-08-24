@@ -1,10 +1,11 @@
-package iti.example.foodhub.data.database
+package iti.example.foodhub.data.local.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import iti.example.foodhub.data.dao.UserDao
+import iti.example.foodhub.data.local.dao.UserDao
+import iti.example.foodhub.data.local.entity.User
 
 @Database(entities = [User::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
