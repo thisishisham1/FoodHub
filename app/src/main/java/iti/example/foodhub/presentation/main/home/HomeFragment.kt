@@ -30,23 +30,22 @@ class HomeFragment : Fragment() {
         HomeViewModelFactory(homeRepository)
     }
 
-    private val categories =
-        listOf(
-            "Starter",
-            "Breakfast",
-            "Beef",
-            "Chicken",
-            "Dessert",
-            "Lamb",
-            "Miscellaneous",
-            "Pasta",
-            "Pork",
-            "Seafood",
-            "Side",
-            "Vegan",
-            "Vegetarian",
-            "Goat",
-        )
+    private val categories = listOf(
+        "Starter",
+        "Breakfast",
+        "Beef",
+        "Chicken",
+        "Dessert",
+        "Lamb",
+        "Miscellaneous",
+        "Pasta",
+        "Pork",
+        "Seafood",
+        "Side",
+        "Vegan",
+        "Vegetarian",
+        "Goat",
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,11 +77,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeViewModel(view: View) {
-        val adapter = ItemsAdapter { item ->
-            val action =
-                HomeFragmentDirections.actionHomeFragmentToDetailsFragment(item.idMeal.toInt())
-            view.findNavController().navigate(action)
-        }
+        val adapter = ItemsAdapter(onFavoriteClick = { mealUiModel ->
+            viewModel.toggleFavorite(mealUiModel)
+        }, onClick = {
+            // TODO: handle navigation to details activity
+        })
         view.findViewById<RecyclerView>(R.id.orderRecyclerView).adapter = adapter
 
         viewModel.meals.observe(viewLifecycleOwner) { items ->
