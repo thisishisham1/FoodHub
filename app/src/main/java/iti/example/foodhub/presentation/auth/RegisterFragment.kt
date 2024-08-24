@@ -31,7 +31,7 @@ class RegisterFragment : Fragment() {
             // Perform registration logic here (e.g., saving user data in the Room database)
 
             // After successful registration, navigate to HomeFragment
-            findNavController().navigate(R.id.action_registerFragment_to_homeFragment)
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
     }
 
