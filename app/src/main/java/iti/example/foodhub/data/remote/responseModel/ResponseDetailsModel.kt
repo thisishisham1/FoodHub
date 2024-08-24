@@ -6,7 +6,6 @@ data class Meals(
     val strMealThumb: String,
     val strYoutube: String,
     val strInstructions  : String,
-
 )
 
 

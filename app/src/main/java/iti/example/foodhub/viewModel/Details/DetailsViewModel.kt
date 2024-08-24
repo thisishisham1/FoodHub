@@ -21,8 +21,8 @@ class MealDetailsViewModel(
     fun getMealDetails(i: String) {
         viewModelScope.launch {
 
-
             _mealDetails.value = homeRepository.getMealsById(i)
+
 
 
         }
