@@ -7,7 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import iti.example.foodhub.R
 import iti.example.foodhub.viewModel.authentication.AuthViewModel
-import iti.example.foodhub.data.database.AppDatabase
+import iti.example.foodhub.data.local.database.AppDatabase
 import iti.example.foodhub.data.repository.UserRepository
 import iti.example.foodhub.viewModel.authentication.AuthViewModelFactory
 
@@ -32,15 +32,15 @@ class AuthActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         // Check if the user exists
-        viewModel.checkUserExists("user@example.com",
-            onUserExists = {
-                // Navigate to login fragment
-                navController.navigate(R.id.loginFragment)
-            },
-            onUserNotExists = {
-                // Navigate to registration fragment
-                navController.navigate(R.id.registerFragment)
-            }
-        )
+//        viewModel.checkUserExists("user@example.com",
+//            onUserExists = {
+//                // Navigate to login fragment
+//                navController.navigate(R.id.loginFragment)
+//            },
+//            onUserNotExists = {
+//                // Navigate to registration fragment
+//                navController.navigate(R.id.registerFragment)
+//            }
+//        )
     }
 }

@@ -1,7 +1,7 @@
 package iti.example.foodhub.data.repository
 
-import iti.example.foodhub.data.dao.UserDao
-import iti.example.foodhub.data.database.User
+import iti.example.foodhub.data.local.dao.UserDao
+import iti.example.foodhub.data.local.entity.User
 
 class UserRepository(private val userDao: UserDao) {
 

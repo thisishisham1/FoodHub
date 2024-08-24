@@ -15,18 +15,19 @@ class DetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding=ActivityDetailsBinding.inflate(layoutInflater).apply {
-            setContentView(root)
-            val navHostFragment=supportFragmentManager.findFragmentById(R.id.details_nav_host_fragment)
-            as? NavHostFragment ?: throw IllegalStateException("NavHostFragment not found")
-            val navController = navHostFragment.navController
 
-        }
         setContentView(R.layout.activity_details)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+        binding=ActivityDetailsBinding.inflate(layoutInflater).apply {
+            setContentView(root)
+            val navHostFragment=supportFragmentManager.findFragmentById(R.id.details_nav_host_fragment)
+                    as? NavHostFragment ?: throw IllegalStateException("NavHostFragment not found")
+            val navController = navHostFragment.navController
+
         }
     }
 }

@@ -2,7 +2,7 @@ package iti.example.foodhub.viewModel.authentication
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import iti.example.foodhub.data.database.User
+import iti.example.foodhub.data.local.entity.User
 import iti.example.foodhub.data.repository.UserRepository
 import kotlinx.coroutines.launch
 
