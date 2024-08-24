@@ -81,4 +81,6 @@ dependencies {
     // Glide for image loading
     implementation(libs.glide)
     ksp(libs.compiler)
+
+    implementation (libs.core)
 }
