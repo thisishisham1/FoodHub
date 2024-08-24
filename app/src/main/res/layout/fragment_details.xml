@@ -43,18 +43,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <!-- Favorite Button -->
-    <ImageView
-        android:id="@+id/favorite_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/favorite"
-        android:src="@drawable/baseline_favorite_24"
-        app:layout_constraintEnd_toEndOf="@+id/food_image"
-        app:layout_constraintTop_toTopOf="@+id/food_image" />
-
     <!-- Recipe Title -->
     <TextView
         android:id="@+id/food_title"

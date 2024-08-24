@@ -2,6 +2,7 @@ package iti.example.foodhub.data.remote.source
 
 import iti.example.foodhub.data.remote.MealsService
 import iti.example.foodhub.data.remote.responseModel.Meals
+import iti.example.foodhub.data.remote.responseModel.ResponseDetailsModel
 import iti.example.foodhub.data.remote.responseModel.ResponseMealsModel
 import retrofit2.Response
 
@@ -11,7 +12,7 @@ class RemoteDataSourceImpl(private val mealsService: MealsService) : RemoteDataS
         return mealsService.getMealsByCategory(category)
     }
 
-    override suspend fun getMealsById(i: String):Meals {
+    override suspend fun getMealsById(i: String): ResponseDetailsModel {
         return mealsService.getMealsById(i)
     }
 

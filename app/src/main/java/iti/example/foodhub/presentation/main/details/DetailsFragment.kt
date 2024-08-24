@@ -48,19 +48,19 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mealsId = arguments?.getString("i") ?: ""
-        viewModel.getMealDetails(mealsId)
+       // val mealsId = arguments?.getString("i") ?: ""
+       // viewModel.getMealDetails(mealsId)
 
-        findId(view)
-        HandleBackDrawer()
-        HandleFavouriteButton()
-
-
-        viewModel.mealDetails.observe(viewLifecycleOwner) { mealsId ->
-           Glide.with(this).load(mealsId.strMealThumb).into(foodImageView)
+       // findId(view)
+       // HandleBackDrawer()
+       // HandleFavouriteButton()
 
 
-            foodDescription.text = mealsId.strInstructions
+        //viewModel.mealDetails.observe(viewLifecycleOwner) { mealsId ->
+            //Glide.with(this).load(mealsId.meals[0].strMealThumb).into(foodImageView)
+
+
+            /* foodDescription.text = mealsId.strInstructions
 
             // handle video
             if (mealsId.strYoutube.isNotBlank()) {
@@ -73,12 +73,13 @@ class DetailsFragment : Fragment() {
             }
 
 
+
+
+
+*/
         }
-
-
-
     }
-
+/*
     private fun findId(view: View) {
         foodImageView = view.findViewById(R.id.food_image)
         foodDescription = view.findViewById(R.id.food_description)
@@ -109,7 +110,7 @@ class DetailsFragment : Fragment() {
     }
 }
 
-
+*/
 
 
 
