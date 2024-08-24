@@ -64,7 +64,8 @@ class DetailsFragment : Fragment() {
             if (meal.strYoutube.isNotBlank()) {
                 val videoId = Uri.parse(meal.strYoutube).getQueryParameter("v")
                 lifecycle.addObserver(youtubePlayerView)
-                youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                youtubePlayerView.addYouTubePlayerListener(object :
+                    AbstractYouTubePlayerListener() {
                     override fun onReady(youTubePlayer: YouTubePlayer) {
                         if (videoId != null) {
                             youTubePlayer.cueVideo(videoId, 0f)
@@ -77,6 +78,7 @@ class DetailsFragment : Fragment() {
 
         }
     }
+}
 
 
 
