@@ -39,7 +39,6 @@
         android:layout_marginTop="32dp"
         android:contentDescription="@string/food_image"
         android:scaleType="centerCrop"
-        android:src="@drawable/large_image_in_welcome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />

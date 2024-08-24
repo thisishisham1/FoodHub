@@ -13,19 +13,30 @@ import com.bumptech.glide.Glide
 import iti.example.foodhub.R
 import iti.example.foodhub.presentation.model.MealUiModel
 
-class ItemsAdapter(private val onClick: (MealUiModel) -> Unit) :
+class ItemsAdapter(
+    private val onClick: (MealUiModel) -> Unit,
+    private val onFavoriteClick: (MealUiModel) -> Unit
+) :
     ListAdapter<MealUiModel, ItemsAdapter.ViewHolder>(MealDiffCallback()) {
 
-    class ViewHolder(itemView: View, val onClick: (MealUiModel) -> Unit) :
+    class ViewHolder(
+        itemView: View,
+        val onClick: (MealUiModel) -> Unit,
+        val onFavoriteClick: (MealUiModel) -> Unit
+    ) :
         RecyclerView.ViewHolder(itemView) {
         private val itemNameTextView: TextView = itemView.findViewById(R.id.itemNameTextView)
         private val itemImageView: ImageView = itemView.findViewById(R.id.itemImageView)
         private val itemCardView: CardView = itemView.findViewById(R.id.item_card)
+        private val favoriteCardView: CardView = itemView.findViewById(R.id.favoriteCardView)
         private var currentItem: MealUiModel? = null
 
         init {
             itemCardView.setOnClickListener {
                 currentItem?.let { onClick(it) }
+            }
+            favoriteCardView.setOnClickListener {
+                currentItem?.let { onFavoriteClick(it) }
             }
         }
 
@@ -35,12 +46,17 @@ class ItemsAdapter(private val onClick: (MealUiModel) -> Unit) :
             Glide.with(itemView.context)
                 .load(item.strMealThumb)
                 .into(itemImageView)
+            favoriteCardView.backgroundTintList = if (item.isFavorite) {
+                itemView.context.getColorStateList(R.color.primary)
+            } else {
+                itemView.context.getColorStateList(R.color.grey)
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_card, parent, false)
-        return ViewHolder(view, onClick)
+        return ViewHolder(view, onClick,onFavoriteClick)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

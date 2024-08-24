@@ -19,26 +19,32 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     private var _meals = MutableLiveData<List<MealUiModel>>()
     val meals: LiveData<List<MealUiModel>> = _meals
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
 
     fun getMealsByCategory(category: String) {
         Log.d(TAG, "getMealsByCategory: $category")
         viewModelScope.launch {
-            _isLoading.value = true
             runBlocking {
                 val response = homeRepository.getMealsByCategory(category)
                 if (response.isSuccessful) {
                     _meals.value = response.body()?.meals?.map {
                         it.toUiModel(false)
                     }
-                    Log.d(TAG, "getMealsByCategory: success")
-                    Log.d(TAG, "getMealsByCategory: ${meals.value?.size}")
                 } else {
                     Log.d(TAG, "getMealsByCategory: failed")
                 }
             }
-            _isLoading.value = false
+        }
+    }
+
+    fun toggleFavorite(meal: MealUiModel) {
+        viewModelScope.launch {
+            _meals.value = _meals.value?.map {
+                if (it.idMeal == meal.idMeal) {
+                    it.copy(isFavorite = !it.isFavorite)
+                } else {
+                    it
+                }
+            }
         }
     }
 }

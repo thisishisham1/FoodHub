@@ -1,38 +1,41 @@
 package iti.example.foodhub.viewModel.Details
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import iti.example.foodhub.data.remote.responseModel.Meals
-import iti.example.foodhub.data.repository.DetailsRepositry
-import iti.example.foodhub.presentation.mappper.DetailsUiModelMapper
-import iti.example.foodhub.presentation.model.DetailsUiModel
+
+import iti.example.foodhub.data.repository.HomeRepository
 import kotlinx.coroutines.launch
 
-class MealDetailsViewModel(private val detailsRepository: DetailsRepositry,
-    private val mapper : DetailsUiModelMapper
+class MealDetailsViewModel(
+    private val homeRepository: HomeRepository
 ) : ViewModel() {
 
-    private val _mealDetails = MutableLiveData<DetailsUiModel>()
-    val mealDetails: MutableLiveData<DetailsUiModel> get() = _mealDetails
+    private val _mealDetails = MutableLiveData<Meals>()//<DetailsUiModel>()
+    val mealDetails: MutableLiveData<Meals> get() = _mealDetails
 
-    fun getMealDetails(id: String) {
+
+    fun getMealDetails(i: String) {
         viewModelScope.launch {
-            val meal = detailsRepository.getProductById(id)
 
-            _mealDetails.value=mapper.mapToUiModel(meal)
+
+            _mealDetails.value = homeRepository.getMealsById(i)
+
+
         }
     }
 }
 
-class MealDetailsViewModelFactory(private val detailsRepository: DetailsRepositry,
-    private val mapper : DetailsUiModelMapper) : ViewModelProvider.Factory {
+class MealDetailsViewModelFactory(
+    private val homeRepository: HomeRepository
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MealDetailsViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return MealDetailsViewModel(detailsRepository,mapper) as T
+            return MealDetailsViewModel(homeRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
