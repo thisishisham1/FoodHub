@@ -49,6 +49,7 @@ class DetailsFragment : Fragment() {
 
         findId(view)
 
+
         // Fetch meal details
         val mealsId = arguments?.getString("i") ?: "52772"
         viewModel.getMealDetails(mealsId)
@@ -73,14 +74,9 @@ class DetailsFragment : Fragment() {
             } else {
                 youtubePlayerView.visibility = View.GONE
             }
+
         }
     }
 
-    private fun findId(view: View) {
-        titleTextView = view.findViewById(R.id.food_title)
-        foodImageView = view.findViewById(R.id.food_image)
-        foodDescription = view.findViewById(R.id.food_description)
-        seeMoreTextView = view.findViewById(R.id.seeMoreTextView)
-        youtubePlayerView = view.findViewById(R.id.youtube_player_view)
-    }
-}
+
+

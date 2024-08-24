@@ -22,7 +22,9 @@ class MealDetailsViewModel(
     private val _isLoaded = MutableLiveData<Boolean>()
     val isLoaded: LiveData<Boolean> get() = _isLoaded
 
+
     fun getMealDetails(i: String) {
+        Log.d("MealDetailsViewModel", "getMealDetails() called with ID: $i")
         viewModelScope.launch {
             _isLoaded.value = true
             try {
@@ -32,6 +34,7 @@ class MealDetailsViewModel(
                 Log.e("MealDetailsViewModel", "Error fetching meal details", e)
             }
             _isLoaded.value = false
+
         }
     }
 }
