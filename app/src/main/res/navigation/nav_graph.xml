@@ -26,7 +26,11 @@
         android:id="@+id/registerFragment"
         android:name="iti.example.foodhub.presentation.auth.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="iti.example.foodhub.presentation.main.home.HomeFragment"
