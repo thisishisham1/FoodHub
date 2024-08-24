@@ -18,6 +18,7 @@ import iti.example.foodhub.viewModel.Details.MealDetailsViewModelFactory
 
 class DetailsActivity : AppCompatActivity() {
     private lateinit var binding:ActivityDetailsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,6 +29,7 @@ class DetailsActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
 
     }
 }

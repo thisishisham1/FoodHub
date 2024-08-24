@@ -21,6 +21,7 @@ okhttp = "4.9.1"
 filamentAndroid = "1.17.1"
 
 
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
