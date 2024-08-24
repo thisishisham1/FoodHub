@@ -2,6 +2,7 @@ package iti.example.foodhub.presentation.main.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ import iti.example.foodhub.R
 import iti.example.foodhub.data.remote.retrofit.RetrofitService
 import iti.example.foodhub.data.remote.source.RemoteDataSourceImpl
 import iti.example.foodhub.data.repository.HomeRepository
+import iti.example.foodhub.presentation.main.details.DetailsActivity
 import iti.example.foodhub.presentation.main.details.DetailsFragment
 import iti.example.foodhub.viewModel.home.HomeViewModel
 import iti.example.foodhub.viewModel.home.HomeViewModelFactory
@@ -82,7 +84,8 @@ class HomeFragment : Fragment() {
         val adapter = ItemsAdapter(onFavoriteClick = { mealUiModel ->
             viewModel.toggleFavorite(mealUiModel)
         }, onClick = {
-            val intent=Intent(context,DetailsFragment::class.java)
+            val intent = Intent(context, DetailsActivity::class.java)
+            intent.putExtra("mealId", it.idMeal)
             startActivity(intent)
         })
         view.findViewById<RecyclerView>(R.id.orderRecyclerView).adapter = adapter
