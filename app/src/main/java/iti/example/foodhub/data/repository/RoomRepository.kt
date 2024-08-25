@@ -14,4 +14,5 @@ class RoomRepository(private val localDataSource: LocalDataSource) {
     suspend fun insertFavorite(favorite: Favorite) = localDataSource.insertFavorite(favorite)
     suspend fun getUserFavorites(userId: Int) = localDataSource.getItemsInFavorite(userId)
     suspend fun deleteFavorite(favorite: Favorite) = localDataSource.deleteFavorite(favorite)
+    suspend fun getUserInfo(userId: Int) = localDataSource.getUserInfo(userId)
 }

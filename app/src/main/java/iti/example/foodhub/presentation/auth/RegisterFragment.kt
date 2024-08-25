@@ -48,8 +48,8 @@ class RegisterFragment : Fragment() {
         Log.d("RegisterFragment", "onViewCreated: called")
         viewModel.registerUser(
             User(
-                username = "hisham mohamed",
-                email = "h19@gmail.com",
+                username = "sohila",
+                email = "h9@gmail.com",
                 password = "123456"
             )
         )
