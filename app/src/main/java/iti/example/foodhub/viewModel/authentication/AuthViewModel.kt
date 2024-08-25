@@ -15,6 +15,35 @@ import kotlinx.coroutines.launch
 const val TAG = "AuthViewModel"
 
 class AuthViewModel(private val roomRepository: RoomRepository) : ViewModel() {
+
+    // Function to validate sign-up input
+    fun validateSignUp(name: String, email: String, password: String): String? {
+        // Check if name is empty
+        if (name.isBlank()) {
+            return "Name cannot be empty"
+        }
+
+        // Check if email is valid using regular expression
+        val emailPattern = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
+        if (!email.matches(emailPattern)) {
+            return "Please enter a valid email address"
+        }
+
+        // Check if password meets the criteria
+        val passwordPattern = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+=!])(?=\\S+\$).{8,}\$")
+        if (!password.matches(passwordPattern)) {
+            return """
+                Password must be at least 8 characters,
+                contain both uppercase and lowercase letters,
+                and include at least one special character.
+            """.trimIndent()
+        }
+
+        // If all checks pass, return null (no error)
+        return null
+    }
+
+    // Register user with Room database
     fun registerUser(user: User) {
         viewModelScope.launch {
             runCatching {

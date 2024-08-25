@@ -19,6 +19,7 @@ import iti.example.foodhub.viewModel.authentication.AuthViewModel
 import iti.example.foodhub.viewModel.authentication.AuthViewModelFactory
 
 class RegisterFragment : Fragment() {
+
     private lateinit var roomRepository: RoomRepository
 
     private val viewModel: AuthViewModel by viewModels(
@@ -39,21 +40,14 @@ class RegisterFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d("RegisterFragment", "onCreate: called")
-        roomRepository =
-            RoomRepository(LocalDataSourceImpl(AppDatabase.getDatabase(requireContext()).Dao()))
+        roomRepository = RoomRepository(LocalDataSourceImpl(AppDatabase.getDatabase(requireContext()).Dao()))
         super.onCreate(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("RegisterFragment", "onViewCreated: called")
-        viewModel.registerUser(
-            User(
-                username = "sohila",
-                email = "h9@gmail.com",
-                password = "123456"
-            )
-        )
+
         // Handle sign-up button click
         binding.btnSignup.setOnClickListener {
             Log.d("RegisterFragment", "btnSignup: clicked")
@@ -63,11 +57,17 @@ class RegisterFragment : Fragment() {
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
 
-            // Validate input
-            val errorMessage = validateSignUp(name, email, password)
+            // Validate input using ViewModel
+            val errorMessage = viewModel.validateSignUp(name, email, password)
             if (errorMessage == null) {
-                // Proceed with registration logic, e.g., saving data to the database
-                registerUser(name, email, password)
+                // Proceed with registration logic
+                viewModel.registerUser(
+                    User(
+                        username = name,
+                        email = email,
+                        password = password
+                    )
+                )
 
                 // Navigate to LoginFragment after successful registration
                 findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
@@ -82,38 +82,5 @@ class RegisterFragment : Fragment() {
         super.onDestroyView()
         Log.d("RegisterFragment", "onDestroyView: called")
         _binding = null
-    }
-
-    // Function to validate sign-up input
-    private fun validateSignUp(name: String, email: String, password: String): String? {
-        // Check if name is empty
-        if (name.isBlank()) {
-            return "Name cannot be empty"
-        }
-
-        // Check if email is valid using regular expression
-        val emailPattern = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
-        if (!email.matches(emailPattern)) {
-            return "Please enter a valid email address"
-        }
-
-        // Check if password meets the criteria
-        val passwordPattern = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+=!])(?=\\S+\$).{8,}\$")
-        if (!password.matches(passwordPattern)) {
-            return """
-                Password must be at least 8 characters,
-                contain both uppercase and lowercase letters,
-                and include at least one special character.
-            """.trimIndent()
-        }
-
-        // If all checks pass, return null (no error)
-        return null
-    }
-
-    // Dummy function to represent user registration logic
-    private fun registerUser(name: String, email: String, password: String) {
-        // Registration logic, such as saving data to Room or making an API call
-        Log.d("RegisterFragment", "User registered: Name=$name, Email=$email")
     }
 }
