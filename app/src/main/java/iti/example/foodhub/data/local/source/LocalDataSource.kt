@@ -10,5 +10,8 @@ interface LocalDataSource {
     suspend fun registerUser(user: User)
     suspend fun loginUser(email: String, password: String): User?
     suspend fun insertFavorite(favorite: Favorite)
-    suspend fun getUserFavorites(userId: Int): List<Item>
+    suspend fun getItemsInFavorite(userId: Int): List<Item>
+    suspend fun deleteFavorite(favorite: Favorite)
+    suspend fun deleteItemById(itemId: Int)
+    suspend fun getUserInfo(userId: Int): User
 }

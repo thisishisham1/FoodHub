@@ -3,6 +3,7 @@ package iti.example.foodhub.data.local.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "favorite_items",
@@ -19,8 +20,7 @@ import androidx.room.Index
             childColumns = ["itemId"],
         )
     ],
-    indices = [Index(value = ["itemId"])]
-
+    indices = [Index(value = ["userId"]), Index(value = ["itemId"])]
 )
 data class Favorite(
     val userId: Int,

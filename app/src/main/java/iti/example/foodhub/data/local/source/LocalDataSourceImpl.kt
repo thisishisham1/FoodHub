@@ -27,7 +27,19 @@ class LocalDataSourceImpl(private val dao: Dao) : LocalDataSource {
         dao.insertFavorite(favorite)
     }
 
-    override suspend fun getUserFavorites(userId: Int): List<Item> {
-        return dao.getUserFavorites(userId)
+    override suspend fun getItemsInFavorite(userId: Int): List<Item> {
+        return dao.getItemsInFavorite(userId)
+    }
+
+    override suspend fun deleteFavorite(favorite: Favorite) {
+        return dao.deleteFavorite(favorite)
+    }
+
+    override suspend fun deleteItemById(itemId: Int) {
+        return dao.deleteItemById(itemId)
+    }
+
+    override suspend fun getUserInfo(userId: Int): User {
+        return dao.getUserInfo(userId)
     }
 }

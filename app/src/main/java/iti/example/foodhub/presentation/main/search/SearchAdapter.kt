@@ -35,8 +35,10 @@ class SearchAdapter(
         @SuppressLint("ResourceType")
         private val mealThumbImageView: ImageView = itemView.findViewById(R.drawable.meal_image)
         private val mealNameTextView: TextView = itemView.findViewById(R.id.itemNameTextView)
+
         @SuppressLint("ResourceType")
-        private val favoriteButton: ImageButton = itemView.findViewById(R.drawable.baseline_favorite_24)
+        private val favoriteButton: ImageButton =
+            itemView.findViewById(R.drawable.baseline_favorite_24)
 
         fun bind(meal: MealUiModel) {
             mealNameTextView.text = meal.strMeal

@@ -160,7 +160,6 @@ class DetailsFragment : Fragment() {
         youtubePlayerView = view.findViewById(R.id.youtube_player_view)
         titleTextView = view.findViewById(R.id.food_title)
         backArrow = view.findViewById(R.id.back_arrow)
-        descriptionScrollView=view.findViewById(R.id.description_scrollview)
     }
 
 }

@@ -3,7 +3,6 @@ package iti.example.foodhub.viewModel.authentication
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -11,7 +10,6 @@ import iti.example.foodhub.data.local.entity.User
 import iti.example.foodhub.data.repository.RoomRepository
 import iti.example.foodhub.presentation.auth.AuthActivity
 import iti.example.foodhub.presentation.main.MainActivity
-import iti.example.foodhub.presentation.splashView.SplashActivity
 import kotlinx.coroutines.launch
 
 const val TAG = "AuthViewModel"
