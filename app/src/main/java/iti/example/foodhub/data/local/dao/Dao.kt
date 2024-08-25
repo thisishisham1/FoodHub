@@ -34,4 +34,7 @@ interface Dao {
 
     @Query("SELECT items.* FROM favorite_items JOIN items ON favorite_items.itemId = items.itemId WHERE favorite_items.userId = :userId")
     suspend fun getItemsInFavorite(userId: Int): List<Item>
+
+    @Query("SELECT * FROM users WHERE id = :userId")
+    suspend fun getUserInfo(userId: Int): User
 }

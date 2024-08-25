@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
@@ -25,6 +26,7 @@ import iti.example.foodhub.data.repository.HomeRepository
 import iti.example.foodhub.data.repository.RoomRepository
 import iti.example.foodhub.presentation.main.details.DetailsActivity
 import iti.example.foodhub.presentation.main.details.DetailsFragment
+import iti.example.foodhub.sharedPref.SharedPrefHelper
 import iti.example.foodhub.viewModel.home.HomeViewModel
 import iti.example.foodhub.viewModel.home.HomeViewModelFactory
 
@@ -32,10 +34,9 @@ import iti.example.foodhub.viewModel.home.HomeViewModelFactory
 class HomeFragment : Fragment() {
     private lateinit var roomRepository: RoomRepository
     private lateinit var homeRepository: HomeRepository
-
-
+    private lateinit var sharedPrefHelper: SharedPrefHelper
     private val viewModel: HomeViewModel by viewModels {
-        HomeViewModelFactory(homeRepository, roomRepository)
+        HomeViewModelFactory(homeRepository, roomRepository, sharedPrefHelper)
     }
 
     private val categories = listOf(
@@ -59,6 +60,7 @@ class HomeFragment : Fragment() {
         roomRepository =
             RoomRepository(LocalDataSourceImpl(AppDatabase.getDatabase(requireContext()).Dao()))
         homeRepository = HomeRepository(RemoteDataSourceImpl(RetrofitService.mealsService))
+        sharedPrefHelper = SharedPrefHelper(requireContext())
         super.onCreate(savedInstanceState)
     }
 
@@ -103,6 +105,11 @@ class HomeFragment : Fragment() {
 
         viewModel.meals.observe(viewLifecycleOwner) { items ->
             adapter.submitList(items)
+        }
+
+        viewModel.userInfo.observe(viewLifecycleOwner) { user ->
+            view.findViewById<TextView>(R.id.profile_name).text = user.username
+            view.findViewById<TextView>(R.id.profile_email).text = user.email
         }
     }
 

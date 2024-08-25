@@ -13,4 +13,5 @@ interface LocalDataSource {
     suspend fun getItemsInFavorite(userId: Int): List<Item>
     suspend fun deleteFavorite(favorite: Favorite)
     suspend fun deleteItemById(itemId: Int)
+    suspend fun getUserInfo(userId: Int): User
 }

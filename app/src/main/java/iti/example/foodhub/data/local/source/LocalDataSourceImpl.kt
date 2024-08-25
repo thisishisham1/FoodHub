@@ -38,4 +38,8 @@ class LocalDataSourceImpl(private val dao: Dao) : LocalDataSource {
     override suspend fun deleteItemById(itemId: Int) {
         return dao.deleteItemById(itemId)
     }
+
+    override suspend fun getUserInfo(userId: Int): User {
+        return dao.getUserInfo(userId)
+    }
 }

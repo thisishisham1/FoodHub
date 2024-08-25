@@ -44,7 +44,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.loginUser(
-            "h19@gmail.com",
+            "h9@gmail.com",
             "123456",
             onSuccess = {},
             onError = {},
@@ -56,7 +56,6 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
         loginNavigator.setOnClickListener {
-
         }
     }
 

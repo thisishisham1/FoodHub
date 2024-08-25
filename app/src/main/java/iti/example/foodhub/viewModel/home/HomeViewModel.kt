@@ -8,11 +8,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import iti.example.foodhub.data.local.entity.Favorite
 import iti.example.foodhub.data.local.entity.Item
+import iti.example.foodhub.data.local.entity.User
 import iti.example.foodhub.data.remote.responseModel.Meal
 import iti.example.foodhub.data.repository.HomeRepository
 import iti.example.foodhub.data.repository.RoomRepository
 import iti.example.foodhub.presentation.mappper.toUiModel
 import iti.example.foodhub.presentation.model.MealUiModel
+import iti.example.foodhub.sharedPref.SharedPrefHelper
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -20,11 +22,17 @@ private const val TAG = "HomeViewModel"
 
 class HomeViewModel(
     private val homeRepository: HomeRepository,
-    private val roomRepository: RoomRepository
+    private val roomRepository: RoomRepository, private val sharedPrefHelper: SharedPrefHelper
 ) : ViewModel() {
     private var _meals = MutableLiveData<List<MealUiModel>>()
     val meals: LiveData<List<MealUiModel>> = _meals
 
+    private val _userInfo = MutableLiveData<User>()
+    val userInfo: LiveData<User> = _userInfo
+
+    init {
+        getUserInfo(1)
+    }
 
     fun getMealsByCategory(category: String) {
         Log.d(TAG, "getMealsByCategory: $category")
@@ -32,9 +40,13 @@ class HomeViewModel(
             runBlocking {
                 val response = homeRepository.getMealsByCategory(category)
                 if (response.isSuccessful) {
-                    _meals.value = response.body()?.meals?.map {
-                        it.toUiModel(false)
+                    val mealList =
+                        response.body()?.meals?.map { it.toUiModel(false) } ?: emptyList()
+                    val favoriteItems = roomRepository.getUserFavorites(1)
+                    val updatedMeals = mealList.map { meal ->
+                        meal.copy(isFavorite = favoriteItems.any { it.itemId == meal.idMeal.toInt() })
                     }
+                    _meals.value = updatedMeals
                 } else {
                     Log.d(TAG, "getMealsByCategory: failed")
                 }
@@ -78,13 +90,27 @@ class HomeViewModel(
             Log.e(TAG, "toggleFavorite: Error updating favorite", exception)
         }
     }
+
+    fun getUserInfo(userId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                _userInfo.value = roomRepository.getUserInfo(userId)
+                Log.d(TAG, "getUserInfo: ${_userInfo.value}")
+            }
+                .onSuccess { Log.d(TAG, "getUserInfo: done") }
+                .onFailure { exception ->
+                    Log.e(TAG, "getUserInfo: Error getting user info", exception)
+                }
+        }
+    }
 }
 
 class HomeViewModelFactory(
     private val homeRepository: HomeRepository,
-    private val roomRepository: RoomRepository
+    private val roomRepository: RoomRepository,
+    private val sharedPrefHelper: SharedPrefHelper
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return HomeViewModel(homeRepository, roomRepository) as T
+        return HomeViewModel(homeRepository, roomRepository, sharedPrefHelper) as T
     }
 }
