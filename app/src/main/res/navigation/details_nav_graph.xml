@@ -9,8 +9,10 @@
         android:id="@+id/detailsFragment"
         android:name="iti.example.foodhub.presentation.main.details.DetailsFragment"
         android:label="fragment_details"
-        tools:layout="@layout/fragment_details"/>
+        tools:layout="@layout/fragment_details">
+    </fragment>
     <argument
         android:name="mealId"
         app:argType="string" />
+
 </navigation>

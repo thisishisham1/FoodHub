@@ -3,12 +3,15 @@ package iti.example.foodhub.presentation.main.details
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.ImageView
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -42,6 +45,7 @@ class DetailsFragment : Fragment() {
     private lateinit var youtubePlayerView: YouTubePlayerView
     private lateinit var titleTextView: TextView
     private lateinit var backArrow: ImageView
+    private lateinit var descriptionScrollView: ScrollView
 
 
     override fun onCreateView(
@@ -55,17 +59,10 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d("DetailsFragment", "onViewCreated called")
 
-        /* seeMoreTextView.setOnClickListener {
-             if (foodDescription.maxLines == 3) {
-                 foodDescription.maxLines = Int.MAX_VALUE
-                 seeMoreTextView.text = getString(R.string.see_less)
-             } else {
-                 foodDescription.maxLines = 3
-                 seeMoreTextView.text = getString(R.string.see_more)
-             }
-         }*/
 
         findId(view)
+
+        //Handle back Arrow
 
         backArrow.setOnClickListener {
             Log.d("DetailsFragment", "Back arrow clicked")
@@ -79,15 +76,62 @@ class DetailsFragment : Fragment() {
             Log.d("DetailsFragment", "onViewCreated: mealId: $mealId")
             viewModel.getMealDetails(mealId)
 
+            //Display image
+
             viewModel.mealDetails.observe(viewLifecycleOwner) { mealDetails ->
                 val meal = mealDetails.meals[0]
                 Log.d("DetailsFragment", "Meal details observed: $meal")
                 Glide.with(this).load(meal.strMealThumb).into(foodImageView)
 
 
+                //  Display meal title
+
                 titleTextView.text = meal.strMeal
 
+                // Display meal Discription
+
                 foodDescription.text = meal.strInstructions
+
+
+               // Display  see more
+
+                var isExpanded:Boolean
+                isExpanded = false // Initially, the text is collapsed
+
+                seeMoreTextView.setOnClickListener {
+                    isExpanded = !isExpanded
+                    if (isExpanded) {
+                        foodDescription.maxLines = Int.MAX_VALUE
+                        // Remove "See More" as it's no longer needed
+                        seeMoreTextView.visibility = View.GONE
+                    } else {
+                        foodDescription.maxLines = 3
+                        // Calculate position for "See Less"
+                        val lastVisibleCharIndex = foodDescription.layout.getLineVisibleEnd(2) // 2 because maxLines is 3
+                        val originalText = foodDescription.text.toString()
+                        val truncatedText = originalText.substring(0, lastVisibleCharIndex)
+                        val seeLessText = getString(R.string.see_less)
+                        foodDescription.text = SpannableStringBuilder(truncatedText)
+                            .append(" ") // Add a space for better readability
+                            .append(seeLessText)
+                    }
+                }
+
+
+                //Handle see more
+
+                seeMoreTextView.setOnClickListener {
+                    if (foodDescription.maxLines == 6) {
+                        foodDescription.maxLines = Int.MAX_VALUE
+                        seeMoreTextView.text = getString(R.string.see_less)
+                    } else {
+                        foodDescription.maxLines = 6
+                        seeMoreTextView.text = getString(R.string.see_more)
+                    }
+                }
+
+
+                //Handle youtube
 
                 if (meal.strYoutube.isNotBlank()) {
                     val videoId = Uri.parse(meal.strYoutube).getQueryParameter("v")
@@ -116,6 +160,7 @@ class DetailsFragment : Fragment() {
         youtubePlayerView = view.findViewById(R.id.youtube_player_view)
         titleTextView = view.findViewById(R.id.food_title)
         backArrow = view.findViewById(R.id.back_arrow)
+        descriptionScrollView=view.findViewById(R.id.description_scrollview)
     }
 
 }
