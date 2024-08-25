@@ -8,17 +8,16 @@
     tools:context=".presentation.main.details.DetailsActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_details"
+        android:id="@+id/nav_host_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="iti.example.foodhub.presentation.main.details.DetailsFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:navGraph="@navigation/details_nav_graph"
+        app:defaultNavHost="true"
         />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,17 +1,31 @@
 package iti.example.foodhub.data.local.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import iti.example.foodhub.data.local.entity.Favorite
 import iti.example.foodhub.data.local.entity.Item
+import iti.example.foodhub.data.local.entity.User
+
 @Dao
-interface FavoriteDao {
+interface Dao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertItem(item: Item)
+
+    @Query("SELECT * FROM items")
+    suspend fun getAllItems(): List<Item>
+
+    @Insert
+    suspend fun registerUser(user: User)
+
+    @Query("SELECT * FROM users WHERE email = :email AND password = :password")
+    suspend fun loginUser(email: String, password: String): User?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavorite(favorite: Favorite)
 
     @Query("SELECT * FROM items INNER JOIN favorite_items ON items.itemId = favorite_items.itemId WHERE favorite_items.userId = :userId")
     suspend fun getUserFavorites(userId: Int): List<Item>
+
 }
