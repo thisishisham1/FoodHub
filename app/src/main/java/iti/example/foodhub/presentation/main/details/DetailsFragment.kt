@@ -93,6 +93,8 @@ class DetailsFragment : Fragment() {
                 foodDescription.text = meal.strInstructions
 
 
+               // Display  see more
+
                 var isExpanded:Boolean
                 isExpanded = false // Initially, the text is collapsed
 
@@ -128,6 +130,8 @@ class DetailsFragment : Fragment() {
                     }
                 }
 
+
+                //Handle youtube
 
                 if (meal.strYoutube.isNotBlank()) {
                     val videoId = Uri.parse(meal.strYoutube).getQueryParameter("v")
