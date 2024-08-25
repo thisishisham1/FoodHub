@@ -62,6 +62,8 @@ class DetailsFragment : Fragment() {
 
         findId(view)
 
+        //Handle back Arrow
+
         backArrow.setOnClickListener {
             Log.d("DetailsFragment", "Back arrow clicked")
             val intent = Intent(context, MainActivity::class.java)
@@ -74,13 +76,19 @@ class DetailsFragment : Fragment() {
             Log.d("DetailsFragment", "onViewCreated: mealId: $mealId")
             viewModel.getMealDetails(mealId)
 
+            //Display image
+
             viewModel.mealDetails.observe(viewLifecycleOwner) { mealDetails ->
                 val meal = mealDetails.meals[0]
                 Log.d("DetailsFragment", "Meal details observed: $meal")
                 Glide.with(this).load(meal.strMealThumb).into(foodImageView)
 
 
+                //  Display meal title
+
                 titleTextView.text = meal.strMeal
+
+                // Display meal Discription
 
                 foodDescription.text = meal.strInstructions
 
