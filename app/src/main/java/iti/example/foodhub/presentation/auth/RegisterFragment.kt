@@ -1,5 +1,6 @@
 package iti.example.foodhub.presentation.auth
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,16 +16,18 @@ import iti.example.foodhub.data.local.entity.User
 import iti.example.foodhub.data.local.source.LocalDataSourceImpl
 import iti.example.foodhub.data.repository.RoomRepository
 import iti.example.foodhub.databinding.FragmentRegisterBinding
+import iti.example.foodhub.sharedPref.SharedPrefHelper
 import iti.example.foodhub.viewModel.authentication.AuthViewModel
 import iti.example.foodhub.viewModel.authentication.AuthViewModelFactory
 
 class RegisterFragment : Fragment() {
 
     private lateinit var roomRepository: RoomRepository
+    private lateinit var sharedPrefHelper: SharedPrefHelper
 
-    private val viewModel: AuthViewModel by viewModels(
-        factoryProducer = { AuthViewModelFactory(roomRepository) }
-    )
+    private val viewModel: AuthViewModel by viewModels {
+        AuthViewModelFactory(roomRepository, sharedPrefHelper)
+    }
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
@@ -40,10 +43,14 @@ class RegisterFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d("RegisterFragment", "onCreate: called")
-        roomRepository = RoomRepository(LocalDataSourceImpl(AppDatabase.getDatabase(requireContext()).Dao()))
         super.onCreate(savedInstanceState)
+
+        // Initialize SharedPrefHelper and RoomRepository here
+        sharedPrefHelper = SharedPrefHelper(requireContext())
+        roomRepository = RoomRepository(LocalDataSourceImpl(AppDatabase.getDatabase(requireContext()).Dao()))
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("RegisterFragment", "onViewCreated: called")
@@ -57,24 +64,20 @@ class RegisterFragment : Fragment() {
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
 
-            // Validate input using ViewModel
-            val errorMessage = viewModel.validateSignUp(name, email, password)
-            if (errorMessage == null) {
-                // Proceed with registration logic
-                viewModel.registerUser(
-                    User(
-                        username = name,
-                        email = email,
-                        password = password
-                    )
-                )
-
-                // Navigate to LoginFragment after successful registration
-                findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-            } else {
-                // Show error message to the user
-                Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_LONG).show()
-            }
+            // Proceed with registration logic
+            viewModel.registerUser(
+                User(
+                    username = name,
+                    email = email,
+                    password = password
+                ),
+                onSuccess = {
+                    findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                },
+                onFailure = {
+                    Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                }
+            )
         }
     }
 

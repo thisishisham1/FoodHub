@@ -1,6 +1,7 @@
 package iti.example.foodhub.viewModel.home
 
 import android.util.Log
+import android.widget.Button
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,9 +31,11 @@ class HomeViewModel(
     private val _userInfo = MutableLiveData<User>()
     val userInfo: LiveData<User> = _userInfo
 
+
     init {
         getUserInfo(1)
     }
+
 
     fun getMealsByCategory(category: String) {
         Log.d(TAG, "getMealsByCategory: $category")
