@@ -8,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import iti.example.foodhub.R
 import iti.example.foodhub.viewModel.authentication.AuthViewModel
 import iti.example.foodhub.data.local.database.AppDatabase
-import iti.example.foodhub.data.repository.UserRepository
 import iti.example.foodhub.viewModel.authentication.AuthViewModelFactory
 
 class AuthActivity : AppCompatActivity() {
