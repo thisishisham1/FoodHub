@@ -9,7 +9,7 @@ import iti.example.foodhub.data.local.entity.Favorite
 import iti.example.foodhub.data.local.entity.Item
 import iti.example.foodhub.data.local.entity.User
 
-@Database(entities = [User::class, Item::class, Favorite::class], version = 2)
+@Database(entities = [User::class, Item::class, Favorite::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun Dao(): Dao
 

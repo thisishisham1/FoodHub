@@ -17,9 +17,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import iti.example.foodhub.R
+import iti.example.foodhub.data.local.database.AppDatabase
+import iti.example.foodhub.data.local.source.LocalDataSourceImpl
 import iti.example.foodhub.data.remote.retrofit.RetrofitService
 import iti.example.foodhub.data.remote.source.RemoteDataSourceImpl
 import iti.example.foodhub.data.repository.HomeRepository
+import iti.example.foodhub.data.repository.RoomRepository
 import iti.example.foodhub.presentation.main.details.DetailsActivity
 import iti.example.foodhub.presentation.main.details.DetailsFragment
 import iti.example.foodhub.viewModel.home.HomeViewModel
@@ -27,11 +30,12 @@ import iti.example.foodhub.viewModel.home.HomeViewModelFactory
 
 
 class HomeFragment : Fragment() {
-    private val homeRepository: HomeRepository =
-        HomeRepository(RemoteDataSourceImpl(RetrofitService.mealsService))
+    private lateinit var roomRepository: RoomRepository
+    private lateinit var homeRepository: HomeRepository
+
 
     private val viewModel: HomeViewModel by viewModels {
-        HomeViewModelFactory(homeRepository)
+        HomeViewModelFactory(homeRepository, roomRepository)
     }
 
     private val categories = listOf(
@@ -50,6 +54,13 @@ class HomeFragment : Fragment() {
         "Vegetarian",
         "Goat",
     )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        roomRepository =
+            RoomRepository(LocalDataSourceImpl(AppDatabase.getDatabase(requireContext()).Dao()))
+        homeRepository = HomeRepository(RemoteDataSourceImpl(RetrofitService.mealsService))
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -82,7 +93,7 @@ class HomeFragment : Fragment() {
 
     private fun observeViewModel(view: View) {
         val adapter = ItemsAdapter(onFavoriteClick = { mealUiModel ->
-            viewModel.toggleFavorite(mealUiModel)
+            viewModel.favoriteClickedHandle(mealUiModel, 1)
         }, onClick = {
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra("mealId", it.idMeal)
