@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Food Image -->
+    <!-- Details -->
     <TextView
         android:id="@+id/textView"
         style="@style/TextAppearance.Material3.HeadlineMedium"
@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+    <!-- food image -->
     <ImageView
         android:id="@+id/food_image"
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
         android:layout_marginLeft="4dp"
         android:layout_marginRight="6dp"
         />
-
+    <!-- to scroll -->
     <ScrollView
         android:id="@+id/content_scrollview"
         android:layout_width="0dp"
