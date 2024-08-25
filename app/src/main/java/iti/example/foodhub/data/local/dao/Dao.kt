@@ -1,6 +1,7 @@
 package iti.example.foodhub.data.local.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -25,7 +26,12 @@ interface Dao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavorite(favorite: Favorite)
 
-    @Query("SELECT * FROM items INNER JOIN favorite_items ON items.itemId = favorite_items.itemId WHERE favorite_items.userId = :userId")
-    suspend fun getUserFavorites(userId: Int): List<Item>
+    @Delete
+    suspend fun deleteFavorite(favorite: Favorite)
 
+    @Query("DELETE FROM items WHERE itemId = :itemId")
+    suspend fun deleteItemById(itemId: Int)
+
+    @Query("SELECT items.* FROM favorite_items JOIN items ON favorite_items.itemId = items.itemId WHERE favorite_items.userId = :userId")
+    suspend fun getItemsInFavorite(userId: Int): List<Item>
 }
