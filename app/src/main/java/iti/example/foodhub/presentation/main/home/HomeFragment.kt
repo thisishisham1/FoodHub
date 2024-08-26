@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
@@ -73,6 +75,11 @@ class HomeFragment : Fragment() {
         setupRecyclerView(view)
         setupTabs(view)
         observeViewModel(view)
+
+        val signOutButton = view.findViewById<Button>(R.id.signOutButton)
+        signOutButton.setOnClickListener {
+            viewModel.signOut(requireContext())
+        }
     }
 
     private fun setupDrawer() {
@@ -106,6 +113,12 @@ class HomeFragment : Fragment() {
         viewModel.userInfo.observe(viewLifecycleOwner) { user ->
             view.findViewById<TextView>(R.id.profile_name).text = user.username
             view.findViewById<TextView>(R.id.profile_email).text = user.email
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+            errorMessage?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

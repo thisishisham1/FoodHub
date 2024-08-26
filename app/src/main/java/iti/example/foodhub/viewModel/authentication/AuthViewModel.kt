@@ -32,12 +32,6 @@ class AuthViewModel(
         sharedPrefHelper.putString(KEY_USER_EMAIL, email)
     }
 
-
-    fun signOut() {
-        sharedPrefHelper.clear()  // Clear all shared preferences
-    }
-
-
     fun isUserLoggedIn(): Boolean {
         return sharedPrefHelper.getBoolean(KEY_IS_LOGGED_IN, false)
     }
@@ -76,6 +70,7 @@ class AuthViewModel(
                         Log.e(TAG, "registerUser: registration failed", it)
                     }
                 }
+
                 is ValidationResult.Error -> {
                     _errorMessage.value = result.message
                     onFailure(result.message)
@@ -83,9 +78,11 @@ class AuthViewModel(
             }
         }
     }
+
     fun checkLoginStatus(): Boolean {
         return sharedPrefHelper.getBoolean(KEY_IS_LOGGED_IN, false)
     }
+
     fun loginUser(
         email: String,
         password: String,
@@ -98,7 +95,6 @@ class AuthViewModel(
                 onFailure(_errorMessage.value)
                 return@launch
             }
-
             runCatching {
                 roomRepository.loginUser(email, password)
             }.onSuccess { user ->
