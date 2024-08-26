@@ -2,18 +2,17 @@ package iti.example.foodhub.presentation.main.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
@@ -25,7 +24,6 @@ import iti.example.foodhub.data.remote.source.RemoteDataSourceImpl
 import iti.example.foodhub.data.repository.HomeRepository
 import iti.example.foodhub.data.repository.RoomRepository
 import iti.example.foodhub.presentation.main.details.DetailsActivity
-import iti.example.foodhub.presentation.main.details.DetailsFragment
 import iti.example.foodhub.sharedPref.SharedPrefHelper
 import iti.example.foodhub.viewModel.home.HomeViewModel
 import iti.example.foodhub.viewModel.home.HomeViewModelFactory
@@ -77,6 +75,11 @@ class HomeFragment : Fragment() {
         setupRecyclerView(view)
         setupTabs(view)
         observeViewModel(view)
+
+        val signOutButton = view.findViewById<Button>(R.id.signOutButton)
+        signOutButton.setOnClickListener {
+            viewModel.signOut(requireContext())
+        }
     }
 
     private fun setupDrawer() {
@@ -110,6 +113,12 @@ class HomeFragment : Fragment() {
         viewModel.userInfo.observe(viewLifecycleOwner) { user ->
             view.findViewById<TextView>(R.id.profile_name).text = user.username
             view.findViewById<TextView>(R.id.profile_email).text = user.email
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+            errorMessage?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

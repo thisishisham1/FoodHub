@@ -1,5 +1,7 @@
 package iti.example.foodhub.viewModel.home
 
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.Button
 import androidx.lifecycle.LiveData
@@ -10,14 +12,16 @@ import androidx.lifecycle.viewModelScope
 import iti.example.foodhub.data.local.entity.Favorite
 import iti.example.foodhub.data.local.entity.Item
 import iti.example.foodhub.data.local.entity.User
-import iti.example.foodhub.data.remote.responseModel.Meal
 import iti.example.foodhub.data.repository.HomeRepository
 import iti.example.foodhub.data.repository.RoomRepository
+import iti.example.foodhub.presentation.auth.AuthActivity
+import iti.example.foodhub.presentation.main.MainActivity
 import iti.example.foodhub.presentation.mappper.toUiModel
 import iti.example.foodhub.presentation.model.MealUiModel
 import iti.example.foodhub.sharedPref.SharedPrefHelper
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.net.SocketTimeoutException
 
 private const val TAG = "HomeViewModel"
 
@@ -31,27 +35,36 @@ class HomeViewModel(
     private val _userInfo = MutableLiveData<User>()
     val userInfo: LiveData<User> = _userInfo
 
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> = _error
 
     init {
         getUserInfo(1)
     }
 
-
     fun getMealsByCategory(category: String) {
         Log.d(TAG, "getMealsByCategory: $category")
         viewModelScope.launch {
             runBlocking {
-                val response = homeRepository.getMealsByCategory(category)
-                if (response.isSuccessful) {
-                    val mealList =
-                        response.body()?.meals?.map { it.toUiModel(false) } ?: emptyList()
-                    val favoriteItems = roomRepository.getUserFavorites(1)
-                    val updatedMeals = mealList.map { meal ->
-                        meal.copy(isFavorite = favoriteItems.any { it.itemId == meal.idMeal.toInt() })
+                runCatching {
+                    val response = homeRepository.getMealsByCategory(category)
+                    if (response.isSuccessful) {
+                        val mealList =
+                            response.body()?.meals?.map { it.toUiModel(false) } ?: emptyList()
+                        val favoriteItems = roomRepository.getUserFavorites(1)
+                        val updatedMeals = mealList.map { meal ->
+                            meal.copy(isFavorite = favoriteItems.any { it.itemId == meal.idMeal.toInt() })
+                        }
+                        _meals.value = updatedMeals
+                    } else {
+                        Log.d(TAG, "getMealsByCategory: failed")
                     }
-                    _meals.value = updatedMeals
-                } else {
-                    Log.d(TAG, "getMealsByCategory: failed")
+                }.onFailure { exception ->
+                    if (exception is SocketTimeoutException) {
+                        handleSocketTimeoutException(exception)
+                    } else {
+                        Log.e(TAG, "getMealsByCategory: Error", exception)
+                    }
                 }
             }
         }
@@ -63,7 +76,11 @@ class HomeViewModel(
             runCatching {
                 toggleFavorite(meal = meal, userId)
             }.onFailure { exception ->
-                Log.e(TAG, "favoriteClickedHandle: Error toggling favorite", exception)
+                if (exception is SocketTimeoutException) {
+                    handleSocketTimeoutException(exception)
+                } else {
+                    Log.e(TAG, "favoriteClickedHandle: Error toggling favorite", exception)
+                }
             }
         }
     }
@@ -90,11 +107,15 @@ class HomeViewModel(
             _meals.value = updatedMeals
             Log.d(TAG, "toggleFavorite: Updated meals list")
         }.onFailure { exception ->
-            Log.e(TAG, "toggleFavorite: Error updating favorite", exception)
+            if (exception is SocketTimeoutException) {
+                handleSocketTimeoutException(exception)
+            } else {
+                Log.e(TAG, "toggleFavorite: Error updating favorite", exception)
+            }
         }
     }
 
-    fun getUserInfo(userId: Int) {
+    private fun getUserInfo(userId: Int) {
         viewModelScope.launch {
             runCatching {
                 _userInfo.value = roomRepository.getUserInfo(userId)
@@ -102,9 +123,25 @@ class HomeViewModel(
             }
                 .onSuccess { Log.d(TAG, "getUserInfo: done") }
                 .onFailure { exception ->
-                    Log.e(TAG, "getUserInfo: Error getting user info", exception)
+                    if (exception is SocketTimeoutException) {
+                        handleSocketTimeoutException(exception)
+                    } else {
+                        Log.e(TAG, "getUserInfo: Error getting user info", exception)
+                    }
                 }
         }
+    }
+
+    fun signOut(context: Context) {
+        sharedPrefHelper.clear()
+        val intent = Intent(context, AuthActivity::class.java)
+        context.startActivity(intent)
+        (context as? MainActivity)?.finish()
+    }
+
+    private fun handleSocketTimeoutException(exception: SocketTimeoutException) {
+        Log.e(TAG, "SocketTimeoutException: ${exception.message}")
+        _error.value = "Network timeout. Please try again later."
     }
 }
 
