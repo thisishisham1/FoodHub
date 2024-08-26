@@ -24,9 +24,7 @@ class FavouriteViewModel(
 
     fun getFavouriteMeals(userId:Int)
     {
-
         viewModelScope.launch {
-
                 try {
 
                     val favoriteItem = roomRepository.getUserFavorites(userId)
