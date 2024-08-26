@@ -2,18 +2,15 @@ package iti.example.foodhub.presentation.main.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
@@ -25,7 +22,6 @@ import iti.example.foodhub.data.remote.source.RemoteDataSourceImpl
 import iti.example.foodhub.data.repository.HomeRepository
 import iti.example.foodhub.data.repository.RoomRepository
 import iti.example.foodhub.presentation.main.details.DetailsActivity
-import iti.example.foodhub.presentation.main.details.DetailsFragment
 import iti.example.foodhub.sharedPref.SharedPrefHelper
 import iti.example.foodhub.viewModel.home.HomeViewModel
 import iti.example.foodhub.viewModel.home.HomeViewModelFactory

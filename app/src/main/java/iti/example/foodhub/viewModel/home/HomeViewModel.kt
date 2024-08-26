@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import iti.example.foodhub.data.local.entity.Favorite
 import iti.example.foodhub.data.local.entity.Item
 import iti.example.foodhub.data.local.entity.User
-import iti.example.foodhub.data.remote.responseModel.Meal
 import iti.example.foodhub.data.repository.HomeRepository
 import iti.example.foodhub.data.repository.RoomRepository
 import iti.example.foodhub.presentation.mappper.toUiModel
@@ -91,7 +90,7 @@ class HomeViewModel(
         }
     }
 
-    fun getUserInfo(userId: Int) {
+    private fun getUserInfo(userId: Int) {
         viewModelScope.launch {
             runCatching {
                 _userInfo.value = roomRepository.getUserInfo(userId)
