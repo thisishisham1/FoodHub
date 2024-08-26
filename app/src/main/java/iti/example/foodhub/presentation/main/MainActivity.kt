@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity() {
             setContentView(root)
             setupWindowInsets()
         }
-        supportFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, HomeFragment()).commit()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_nav_host_fragment, HomeFragment()).commit()
 
         binding.bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
@@ -35,9 +36,12 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
+
     private fun navigateFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, fragment)
+            .commit()
     }
+
     private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
