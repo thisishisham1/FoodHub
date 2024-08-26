@@ -10,11 +10,63 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import iti.example.foodhub.R
 import iti.example.foodhub.data.remote.responseModel.FavoriteItem
+import iti.example.foodhub.viewModel.fav.FavouriteViewModel
 
 class FavoriteFragment : Fragment() {
 
-    private lateinit var favoriteItemsAdapter: FavoriteItemsAdapter
-    private val favoriteItems = listOf(
+   // private lateinit var favoriteItemsAdapter: FavoriteItemsAdapter
+    private lateinit var viewModel:FavouriteViewModel
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_favorite, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // setupRecyclerView(view)
+    }
+}
+
+
+ /*   private fun setupRecyclerView(view: View) {
+        favoriteItemsAdapter = FavoriteItemsAdapter(favoriteItems) { favoriteItem ->
+            // Handle item click here, for example, show a Toast
+            Toast.makeText(requireContext(), "Clicked on ${favoriteItem.name}", Toast.LENGTH_SHORT).show()
+        }
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.favrecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = favoriteItemsAdapter
+    }
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*  private val favoriteItems = listOf(
         FavoriteItem(
             id = 1,
             name = "Spaghetti Bolognese",
@@ -41,28 +93,4 @@ class FavoriteFragment : Fragment() {
             imageUrl = "https://www.example.com/images/margarita_pizza.jpg"
         )
     )
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_favorite, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView(view)
-    }
-
-
-    private fun setupRecyclerView(view: View) {
-        favoriteItemsAdapter = FavoriteItemsAdapter(favoriteItems) { favoriteItem ->
-            // Handle item click here, for example, show a Toast
-            Toast.makeText(requireContext(), "Clicked on ${favoriteItem.name}", Toast.LENGTH_SHORT).show()
-        }
-
-        val recyclerView = view.findViewById<RecyclerView>(R.id.favrecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = favoriteItemsAdapter
-    }
-}
+*/
