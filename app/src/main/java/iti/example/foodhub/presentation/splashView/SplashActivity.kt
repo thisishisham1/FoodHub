@@ -19,14 +19,19 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import iti.example.foodhub.R
+import iti.example.foodhub.sharedPref.SharedPrefHelper
 import iti.example.foodhub.viewModel.splash.SplashViewModel
 import iti.example.foodhub.viewModel.splash.SplashViewModelFactory
 
+// SplashActivity
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
+    private val sharedPreferences by lazy { this.getSharedPreferences("sharedPrefFile", MODE_PRIVATE) }
+    private val sharedPrefHelper by lazy { SharedPrefHelper(sharedPreferences) }
     private val viewModel: SplashViewModel by viewModels {
-        SplashViewModelFactory(this)
+        SplashViewModelFactory(this, sharedPrefHelper)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -37,6 +42,7 @@ class SplashActivity : AppCompatActivity() {
             insets
         }
     }
+
     override fun onStart() {
         super.onStart()
         animateLogo()
@@ -48,7 +54,8 @@ class SplashActivity : AppCompatActivity() {
         val appName = findViewById<ImageView>(R.id.app_name_splash)
 
         val logoAnimator = ObjectAnimator.ofFloat(
-            logo,View.ALPHA,0f,1f).apply {
+            logo, View.ALPHA, 0f, 1f
+        ).apply {
             duration = 800
             interpolator = AccelerateDecelerateInterpolator()
         }
@@ -62,19 +69,27 @@ class SplashActivity : AppCompatActivity() {
         }
 
         val appNameAnimator = ObjectAnimator.ofFloat(
-            appName,View.ALPHA,0f,1f).apply {
+            appName, View.ALPHA, 0f, 1f
+        ).apply {
             duration = 800
             startDelay = 300
             interpolator = AccelerateDecelerateInterpolator()
         }
-        val appNameTranslationY = ObjectAnimator.ofFloat(appName, View.TRANSLATION_Y, 50f, 0f).apply {
-            duration = 800
-            startDelay = 300
-            interpolator = OvershootInterpolator()
-        }
+        val appNameTranslationY =
+            ObjectAnimator.ofFloat(appName, View.TRANSLATION_Y, 50f, 0f).apply {
+                duration = 800
+                startDelay = 300
+                interpolator = OvershootInterpolator()
+            }
 
         AnimatorSet().apply {
-            playTogether(logoAnimator,logoScaleXAnimator,logoScaleYAnimator,appNameAnimator,appNameTranslationY)
+            playTogether(
+                logoAnimator,
+                logoScaleXAnimator,
+                logoScaleYAnimator,
+                appNameAnimator,
+                appNameTranslationY
+            )
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -85,6 +100,5 @@ class SplashActivity : AppCompatActivity() {
             })
             start()
         }
-
     }
 }

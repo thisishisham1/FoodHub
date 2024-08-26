@@ -1,6 +1,8 @@
 package iti.example.foodhub.presentation.auth
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,8 +26,9 @@ class RegisterFragment : Fragment() {
 
     private lateinit var roomRepository: RoomRepository
     private lateinit var sharedPrefHelper: SharedPrefHelper
-    private var isPasswordVisible = false
+    private lateinit var sharedPreferences: SharedPreferences
 
+    private var isPasswordVisible = false
 
     private val viewModel: AuthViewModel by viewModels {
         AuthViewModelFactory(roomRepository, sharedPrefHelper)
@@ -33,6 +36,12 @@ class RegisterFragment : Fragment() {
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        sharedPreferences = context.getSharedPreferences("sharedPrefFile", Context.MODE_PRIVATE)
+        sharedPrefHelper = SharedPrefHelper(sharedPreferences)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,8 +56,6 @@ class RegisterFragment : Fragment() {
         Log.d("RegisterFragment", "onCreate: called")
         super.onCreate(savedInstanceState)
 
-        // Initialize SharedPrefHelper and RoomRepository here
-        sharedPrefHelper = SharedPrefHelper(requireContext())
         roomRepository = RoomRepository(LocalDataSourceImpl(AppDatabase.getDatabase(requireContext()).Dao()))
     }
 
@@ -93,18 +100,29 @@ class RegisterFragment : Fragment() {
         }
     }
 
-
     private fun togglePasswordVisibility() {
         if (isPasswordVisible) {
             // Hide the password
-            binding.etPassword.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+            binding.etPassword.inputType =
+                android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
             binding.etPassword.setSelection(binding.etPassword.text.length) // Move the cursor to the end
-            binding.eyeIconTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_red_eye_24, 0)
+            binding.eyeIconTextView.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                0,
+                R.drawable.baseline_remove_red_eye_24,
+                0
+            )
         } else {
             // Show the password
-            binding.etPassword.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            binding.etPassword.inputType =
+                android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
             binding.etPassword.setSelection(binding.etPassword.text.length) // Move the cursor to the end
-            binding.eyeIconTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_red_eye_24, 0)
+            binding.eyeIconTextView.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                0,
+                R.drawable.baseline_remove_red_eye_24,
+                0
+            )
         }
         isPasswordVisible = !isPasswordVisible
     }

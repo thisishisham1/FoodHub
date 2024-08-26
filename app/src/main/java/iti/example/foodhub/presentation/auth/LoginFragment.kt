@@ -1,6 +1,8 @@
 package iti.example.foodhub.presentation.auth
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -21,10 +23,11 @@ import iti.example.foodhub.sharedPref.SharedPrefHelper
 import iti.example.foodhub.viewModel.authentication.AuthViewModel
 import iti.example.foodhub.viewModel.authentication.AuthViewModelFactory
 
+// LoginFragment
 class LoginFragment : Fragment() {
     private lateinit var roomRepository: RoomRepository
     private lateinit var sharedPrefHelper: SharedPrefHelper
-
+    private lateinit var sharedPreferences: SharedPreferences
     private val viewModel: AuthViewModel by viewModels(
         factoryProducer = { AuthViewModelFactory(roomRepository, sharedPrefHelper) }
     )
@@ -37,6 +40,12 @@ class LoginFragment : Fragment() {
 
     private var isPasswordVisible = false
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        sharedPreferences = context.getSharedPreferences("sharedPrefFile", Context.MODE_PRIVATE)
+        sharedPrefHelper = SharedPrefHelper(sharedPreferences)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -48,9 +57,7 @@ class LoginFragment : Fragment() {
         Log.d("LoginFragment", "onCreate: called")
         super.onCreate(savedInstanceState)
 
-        sharedPrefHelper = SharedPrefHelper(requireContext())
-        roomRepository =
-            RoomRepository(LocalDataSourceImpl(AppDatabase.getDatabase(requireContext()).Dao()))
+        roomRepository = RoomRepository(LocalDataSourceImpl(AppDatabase.getDatabase(requireContext()).Dao()))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,9 +83,6 @@ class LoginFragment : Fragment() {
                 email = email,
                 password = password,
                 onSuccess = {
-                    // Save login status and navigate to the main activity on successful login
-                    sharedPrefHelper.putBoolean(AuthViewModel.KEY_IS_LOGGED_IN, true)
-                    sharedPrefHelper.putString(AuthViewModel.KEY_USER_ID, email)
                     startActivity(Intent(requireContext(), MainActivity::class.java))
                     requireActivity().finish()
                 },
@@ -109,12 +113,24 @@ class LoginFragment : Fragment() {
     private fun togglePasswordVisibility() {
         if (isPasswordVisible) {
             // Hide the password
-            passwordInput.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            eyeIconTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_red_eye_24, 0)
+            passwordInput.inputType =
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            eyeIconTextView.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                0,
+                R.drawable.baseline_remove_red_eye_24,
+                0
+            )
         } else {
             // Show the password
-            passwordInput.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            eyeIconTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_red_eye_24, 0)
+            passwordInput.inputType =
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            eyeIconTextView.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                0,
+                R.drawable.baseline_remove_red_eye_24,
+                0
+            )
         }
         passwordInput.setSelection(passwordInput.text.length) // Move the cursor to the end
         isPasswordVisible = !isPasswordVisible

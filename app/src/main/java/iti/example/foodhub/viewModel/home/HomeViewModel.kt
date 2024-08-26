@@ -26,8 +26,14 @@ private const val TAG = "HomeViewModel"
 
 class HomeViewModel(
     private val remoteRepository: RemoteRepository,
-    private val roomRepository: RoomRepository, private val sharedPrefHelper: SharedPrefHelper
+    private val roomRepository: RoomRepository,
+    private val sharedPrefHelper: SharedPrefHelper
 ) : ViewModel() {
+    companion object {
+        const val KEY_IS_LOGGED_IN = "is_logged_in"
+        const val KEY_USER_ID = "user_id"
+    }
+
     private var _meals = MutableLiveData<List<MealUiModel>>()
     val meals: LiveData<List<MealUiModel>> = _meals
 
@@ -38,7 +44,12 @@ class HomeViewModel(
     val error: LiveData<String> = _error
 
     init {
-        getUserInfo(1)
+        getUserInfo(getLoggedInUserId() ?: -1)
+        Log.d(TAG, "userId: ${getLoggedInUserId()}")
+    }
+
+    private fun getLoggedInUserId(): Int {
+        return sharedPrefHelper.getInt(KEY_USER_ID, -1) // Return user ID or -1 if not found
     }
 
     fun getMealsByCategory(category: String) {
@@ -48,9 +59,11 @@ class HomeViewModel(
                 runCatching {
                     val response = remoteRepository.getMealsByCategory(category)
                     if (response.isSuccessful) {
+                        Log.d(TAG, "userId suuus: ${getLoggedInUserId()}")
                         val mealList =
                             response.body()?.meals?.map { it.toUiModel(false) } ?: emptyList()
-                        val favoriteItems = roomRepository.getUserFavorites(1)
+                        val favoriteItems =
+                            roomRepository.getUserFavorites(getLoggedInUserId() ?: -1)
                         val updatedMeals = mealList.map { meal ->
                             meal.copy(isFavorite = favoriteItems.any { it.itemId == meal.idMeal.toInt() })
                         }
@@ -69,7 +82,8 @@ class HomeViewModel(
         }
     }
 
-    fun favoriteClickedHandle(meal: MealUiModel, userId: Int) {
+    fun favoriteClickedHandle(meal: MealUiModel) {
+        val userId = getLoggedInUserId()
         viewModelScope.launch {
             Log.d(TAG, "favoriteClickedHandle: Toggling favorite for meal: ${meal.idMeal}")
             runCatching {

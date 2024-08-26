@@ -1,6 +1,8 @@
 package iti.example.foodhub.presentation.main.home
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -33,6 +35,7 @@ class HomeFragment : Fragment() {
     private lateinit var roomRepository: RoomRepository
     private lateinit var remoteRepository: RemoteRepository
     private lateinit var sharedPrefHelper: SharedPrefHelper
+    private lateinit var sharedPreferences: SharedPreferences
     private val viewModel: HomeViewModel by viewModels {
         HomeViewModelFactory(remoteRepository, roomRepository, sharedPrefHelper)
     }
@@ -58,8 +61,13 @@ class HomeFragment : Fragment() {
         roomRepository =
             RoomRepository(LocalDataSourceImpl(AppDatabase.getDatabase(requireContext()).Dao()))
         remoteRepository = RemoteRepository(RemoteDataSourceImpl(RetrofitService.mealsService))
-        sharedPrefHelper = SharedPrefHelper(requireContext())
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        sharedPreferences = context.getSharedPreferences("sharedPrefFile", Context.MODE_PRIVATE)
+        sharedPrefHelper = SharedPrefHelper(sharedPreferences)
     }
 
     override fun onCreateView(
@@ -98,7 +106,7 @@ class HomeFragment : Fragment() {
 
     private fun observeViewModel(view: View) {
         val adapter = ItemsAdapter(onFavoriteClick = { mealUiModel ->
-            viewModel.favoriteClickedHandle(mealUiModel, 1)
+            viewModel.favoriteClickedHandle(mealUiModel)
         }, onClick = {
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra("mealId", it.idMeal)

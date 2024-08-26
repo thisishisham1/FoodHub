@@ -1,36 +1,40 @@
 package iti.example.foodhub.sharedPref
 
-import android.content.Context
+import android.content.SharedPreferences
+import android.util.Log
 
-class SharedPrefHelper(context: Context) {
+class SharedPrefHelper(private val sharedPreferences: SharedPreferences) {
 
-    private val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-
-    fun putString(key: String, value: String) {
-        prefs.edit().putString(key, value).apply()
+    fun putBoolean(key: String, value: Boolean) {
+        sharedPreferences.edit().putBoolean(key, value).apply()
     }
 
-    fun getString(key: String, defaultValue: String? = null): String? {
-        return prefs.getString(key, defaultValue)
+    fun getBoolean(key: String, defaultValue: Boolean): Boolean {
+        return sharedPreferences.getBoolean(key, defaultValue)
     }
 
     fun putInt(key: String, value: Int) {
-        prefs.edit().putInt(key, value).apply()
+        sharedPreferences.edit().putInt(key, value).apply()
     }
 
-    fun getInt(key: String, defaultValue: Int = 0): Int {
-        return prefs.getInt(key, defaultValue)
+    fun getInt(key: String, defaultValue: Int): Int {
+        return try {
+            sharedPreferences.getInt(key, defaultValue)
+        } catch (e: ClassCastException) {
+            Log.d("sharedpref", "getInt: ${e.message}")
+            defaultValue
+        }
     }
 
-    fun putBoolean(key: String, value: Boolean) {
-        prefs.edit().putBoolean(key,value).apply()
+    fun putString(key: String, value: String) {
+        sharedPreferences.edit().putString(key, value).apply()
     }
 
-    fun getBoolean(key: String, defaultValue: Boolean = false): Boolean {
-        return prefs.getBoolean(key, defaultValue)
+    fun getString(key: String, defaultValue: String?): String? {
+        return sharedPreferences.getString(key, defaultValue)
     }
 
     fun clear() {
-        prefs.edit().clear().apply()
+        sharedPreferences.edit().clear().apply()
     }
 }
