@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.main.about.AboutFragment"
-    >
+    tools:context=".presentation.main.about.AboutFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/id_aboutTextAppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+
         app:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,12 +26,12 @@
 
             <TextView
                 android:id="@+id/id_aboutText"
-                style="@style/TextAppearance.Material3.HeadlineSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="About"
                 android:textColor="@color/black"
+                style="@style/TextAppearance.Material3.HeadlineMedium"
 
                 />
         </androidx.appcompat.widget.Toolbar>
@@ -43,8 +42,9 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     card_view:cardCornerRadius="12dp"
-        card_view:layout_constraintTop_toBottomOf="@id/id_aboutTextAppBarLayout"
+    card_view:layout_constraintTop_toBottomOf="@id/id_aboutTextAppBarLayout"
     card_view:layout_constraintStart_toStartOf="parent"
+    android:layout_marginTop="10dp"
     card_view:layout_constraintEnd_toEndOf="parent"
     card_view:layout_constraintBottom_toTopOf="@id/id_card_Sohaila"
     >
@@ -68,9 +68,7 @@
             card_view:layout_constraintBottom_toBottomOf="parent"
             android:weightSum="2"
             android:orientation="vertical"
-            android:padding="20dp"
-            >
-
+            android:padding="20dp">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
