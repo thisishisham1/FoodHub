@@ -24,16 +24,21 @@ class AuthViewModel(
 
     companion object {
         const val KEY_IS_LOGGED_IN = "is_logged_in"
-        const val KEY_USER_EMAIL = "user_email"
+        const val KEY_USER_ID = "user_id"
     }
 
-    private fun saveLoginStatus(email: String) {
+    private fun saveLoginStatus(userId: Int) {
         sharedPrefHelper.putBoolean(KEY_IS_LOGGED_IN, true)
-        sharedPrefHelper.putString(KEY_USER_EMAIL, email)
+        sharedPrefHelper.putInt(KEY_USER_ID, userId)
     }
 
-    fun isUserLoggedIn(): Boolean {
-        return sharedPrefHelper.getBoolean(KEY_IS_LOGGED_IN, false)
+
+    fun getLoggedInUserId(): Int? {
+        return if (sharedPrefHelper.getBoolean(KEY_IS_LOGGED_IN, false)) {
+            sharedPrefHelper.getInt(KEY_USER_ID, -1) // Return user ID or -1 if not found
+        } else {
+            null
+        }
     }
 
     private fun validateSignUp(name: String, email: String, password: String): ValidationResult {
@@ -83,6 +88,8 @@ class AuthViewModel(
         return sharedPrefHelper.getBoolean(KEY_IS_LOGGED_IN, false)
     }
 
+
+
     fun loginUser(
         email: String,
         password: String,
@@ -99,7 +106,7 @@ class AuthViewModel(
                 roomRepository.loginUser(email, password)
             }.onSuccess { user ->
                 if (user != null) {
-                    saveLoginStatus(email)
+                    saveLoginStatus(user.id) // Save user ID
                     Log.d(TAG, "loginUser: user logged in successfully")
                     onSuccess()
                 } else {
@@ -113,6 +120,7 @@ class AuthViewModel(
             }
         }
     }
+
 }
 
 class AuthViewModelFactory(
