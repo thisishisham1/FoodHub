@@ -129,6 +129,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_password" />
 
     <TextView
+        android:id="@+id/eyeIconTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
@@ -164,6 +165,7 @@
         app:layout_constraintTop_toBottomOf="@id/btn_signup" />
 
     <TextView
+        android:id="@+id/tvlogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
