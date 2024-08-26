@@ -32,15 +32,6 @@ class AuthViewModel(
         sharedPrefHelper.putInt(KEY_USER_ID, userId)
     }
 
-
-    fun getLoggedInUserId(): Int? {
-        return if (sharedPrefHelper.getBoolean(KEY_IS_LOGGED_IN, false)) {
-            sharedPrefHelper.getInt(KEY_USER_ID, -1) // Return user ID or -1 if not found
-        } else {
-            null
-        }
-    }
-
     private fun validateSignUp(name: String, email: String, password: String): ValidationResult {
         if (name.isBlank()) {
             return ValidationResult.Error("Name cannot be empty")
@@ -107,7 +98,7 @@ class AuthViewModel(
             }.onSuccess { user ->
                 if (user != null) {
                     saveLoginStatus(user.id) // Save user ID
-                    Log.d(TAG, "loginUser: user logged in successfully")
+                    Log.d(TAG, "loginUser: ${sharedPrefHelper.getInt(KEY_USER_ID, -1)}")
                     onSuccess()
                 } else {
                     _errorMessage.value = "User not found or incorrect password"
