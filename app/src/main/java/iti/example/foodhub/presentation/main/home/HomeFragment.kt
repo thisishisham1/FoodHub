@@ -21,7 +21,7 @@ import iti.example.foodhub.data.local.database.AppDatabase
 import iti.example.foodhub.data.local.source.LocalDataSourceImpl
 import iti.example.foodhub.data.remote.retrofit.RetrofitService
 import iti.example.foodhub.data.remote.source.RemoteDataSourceImpl
-import iti.example.foodhub.data.repository.HomeRepository
+import iti.example.foodhub.data.repository.RemoteRepository
 import iti.example.foodhub.data.repository.RoomRepository
 import iti.example.foodhub.presentation.main.details.DetailsActivity
 import iti.example.foodhub.sharedPref.SharedPrefHelper
@@ -31,10 +31,10 @@ import iti.example.foodhub.viewModel.home.HomeViewModelFactory
 
 class HomeFragment : Fragment() {
     private lateinit var roomRepository: RoomRepository
-    private lateinit var homeRepository: HomeRepository
+    private lateinit var remoteRepository: RemoteRepository
     private lateinit var sharedPrefHelper: SharedPrefHelper
     private val viewModel: HomeViewModel by viewModels {
-        HomeViewModelFactory(homeRepository, roomRepository, sharedPrefHelper)
+        HomeViewModelFactory(remoteRepository, roomRepository, sharedPrefHelper)
     }
 
     private val categories = listOf(
@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         roomRepository =
             RoomRepository(LocalDataSourceImpl(AppDatabase.getDatabase(requireContext()).Dao()))
-        homeRepository = HomeRepository(RemoteDataSourceImpl(RetrofitService.mealsService))
+        remoteRepository = RemoteRepository(RemoteDataSourceImpl(RetrofitService.mealsService))
         sharedPrefHelper = SharedPrefHelper(requireContext())
         super.onCreate(savedInstanceState)
     }

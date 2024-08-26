@@ -3,7 +3,6 @@ package iti.example.foodhub.viewModel.home
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import android.widget.Button
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +11,7 @@ import androidx.lifecycle.viewModelScope
 import iti.example.foodhub.data.local.entity.Favorite
 import iti.example.foodhub.data.local.entity.Item
 import iti.example.foodhub.data.local.entity.User
-import iti.example.foodhub.data.repository.HomeRepository
+import iti.example.foodhub.data.repository.RemoteRepository
 import iti.example.foodhub.data.repository.RoomRepository
 import iti.example.foodhub.presentation.auth.AuthActivity
 import iti.example.foodhub.presentation.main.MainActivity
@@ -26,7 +25,7 @@ import java.net.SocketTimeoutException
 private const val TAG = "HomeViewModel"
 
 class HomeViewModel(
-    private val homeRepository: HomeRepository,
+    private val remoteRepository: RemoteRepository,
     private val roomRepository: RoomRepository, private val sharedPrefHelper: SharedPrefHelper
 ) : ViewModel() {
     private var _meals = MutableLiveData<List<MealUiModel>>()
@@ -47,7 +46,7 @@ class HomeViewModel(
         viewModelScope.launch {
             runBlocking {
                 runCatching {
-                    val response = homeRepository.getMealsByCategory(category)
+                    val response = remoteRepository.getMealsByCategory(category)
                     if (response.isSuccessful) {
                         val mealList =
                             response.body()?.meals?.map { it.toUiModel(false) } ?: emptyList()
@@ -146,11 +145,11 @@ class HomeViewModel(
 }
 
 class HomeViewModelFactory(
-    private val homeRepository: HomeRepository,
+    private val remoteRepository: RemoteRepository,
     private val roomRepository: RoomRepository,
     private val sharedPrefHelper: SharedPrefHelper
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return HomeViewModel(homeRepository, roomRepository, sharedPrefHelper) as T
+        return HomeViewModel(remoteRepository, roomRepository, sharedPrefHelper) as T
     }
 }

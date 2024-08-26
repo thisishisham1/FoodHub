@@ -16,4 +16,8 @@ class RemoteDataSourceImpl(private val mealsService: MealsService) : RemoteDataS
         return mealsService.getMealsById(i)
     }
 
+    override suspend fun getMealsBySearch(query: String): Response<ResponseMealsModel> {
+        return mealsService.getMealsBySearch(query)
+    }
+
 }
