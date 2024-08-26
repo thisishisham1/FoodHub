@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
+
 android {
     namespace = "iti.example.foodhub"
     compileSdk = 34
