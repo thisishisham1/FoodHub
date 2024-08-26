@@ -1,5 +1,8 @@
 package iti.example.foodhub.presentation.main.search
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,12 +12,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import iti.example.foodhub.data.local.database.AppDatabase
+import iti.example.foodhub.data.local.source.LocalDataSourceImpl
 import iti.example.foodhub.data.remote.retrofit.RetrofitService
 import iti.example.foodhub.data.remote.source.RemoteDataSourceImpl
 import iti.example.foodhub.data.repository.RemoteRepository
+import iti.example.foodhub.data.repository.RoomRepository
 import iti.example.foodhub.databinding.FragmentSearchBinding
+import iti.example.foodhub.presentation.main.details.DetailsActivity
 import iti.example.foodhub.presentation.main.home.ItemsAdapter
 import iti.example.foodhub.presentation.model.MealUiModel
+import iti.example.foodhub.sharedPref.SharedPrefHelper
 import iti.example.foodhub.viewModel.search.SearchViewModel
 import iti.example.foodhub.viewModel.search.SearchViewModelFactory
 import kotlinx.coroutines.Dispatchers
@@ -26,16 +34,34 @@ import java.net.URL
 
 class SearchFragment : Fragment() {
     private lateinit var remoteRepository: RemoteRepository
+    private lateinit var roomRepository: RoomRepository
+    private lateinit var sharedPrefHelper: SharedPrefHelper
+    private lateinit var sharedPreferences: SharedPreferences
     val viewModel: SearchViewModel by viewModels(
-        factoryProducer = { SearchViewModelFactory(remoteRepository) }
+        factoryProducer = {
+            SearchViewModelFactory(
+                remoteRepository,
+                roomRepository,
+                sharedPrefHelper
+            )
+        }
     )
     private lateinit var binding: FragmentSearchBinding
     private lateinit var adapter: ItemsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        roomRepository =
+            RoomRepository(LocalDataSourceImpl(AppDatabase.getDatabase(requireContext()).Dao()))
         remoteRepository = RemoteRepository(RemoteDataSourceImpl(RetrofitService.mealsService))
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        sharedPreferences = context.getSharedPreferences("sharedPrefFile", Context.MODE_PRIVATE)
+        sharedPrefHelper = SharedPrefHelper(sharedPreferences)
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,10 +77,12 @@ class SearchFragment : Fragment() {
     private fun setupRecyclerView() {
         adapter = ItemsAdapter(
             onClick = { meal ->
-                // Handle click
+                val intent = Intent(context, DetailsActivity::class.java)
+                intent.putExtra("mealId", meal.idMeal)
+                startActivity(intent)
             },
             onFavoriteClick = { meal ->
-                // Handle favorite click
+                viewModel.favoriteClickedHandle(meal)
             }
         )
         binding.idRecyclerViewMeals.adapter = adapter
