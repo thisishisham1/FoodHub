@@ -17,8 +17,9 @@ class FavouriteViewModel(
     :ViewModel(){
 
     private  val _favouriteMeals=MutableLiveData<List<FavoriteItem>>()
-    val favouriteMeals : LiveData<List<FavoriteItem>> get()  = _favouriteMeals
+    val favouriteMeals : LiveData<List<FavoriteItem>>  = _favouriteMeals
     init {
+
         getFavouriteMeals(1)
     }
 
