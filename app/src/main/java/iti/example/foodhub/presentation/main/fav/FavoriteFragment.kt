@@ -91,10 +91,9 @@ class FavouriteFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        sharedPreferences = context.getSharedPreferences("sharedPrefFile", Context.MODE_PRIVATE)
-        sharedPrefHelper = SharedPrefHelper(sharedPreferences)
+      //  sharedPreferences = context.getSharedPreferences("sharedPrefFile", Context.MODE_PRIVATE)
+      //  sharedPrefHelper = SharedPrefHelper(sharedPreferences)
     }
-
      override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
