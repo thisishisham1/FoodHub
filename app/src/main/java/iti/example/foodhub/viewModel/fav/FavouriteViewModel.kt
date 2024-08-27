@@ -23,7 +23,8 @@ import iti.example.foodhub.viewModel.home.HomeViewModel
 import kotlinx.coroutines.launch
 import java.net.SocketTimeoutException
 
-class FavouriteViewModel(private val roomRepository: RoomRepository) : ViewModel() {
+class FavouriteViewModel(private val roomRepository: RoomRepository,
+                         private val sharedPrefHelper: SharedPrefHelper) : ViewModel() {
 
     private val _favoriteMeals = MutableLiveData<List<Item>>()
     val favoriteMeals: LiveData<List<Item>> = _favoriteMeals
@@ -42,9 +43,16 @@ class FavouriteViewModel(private val roomRepository: RoomRepository) : ViewModel
     }
 }
 
-class FavouriteViewModelFactory(private val roomRepository: RoomRepository) : ViewModelProvider.Factory {
+class FavouriteViewModelFactory(
+    private val roomRepository: RoomRepository,
+    private val sharedPrefHelper: SharedPrefHelper
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return FavouriteViewModel(roomRepository) as T
+        if (modelClass.isAssignableFrom(FavouriteViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return FavouriteViewModel(roomRepository, sharedPrefHelper) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
 

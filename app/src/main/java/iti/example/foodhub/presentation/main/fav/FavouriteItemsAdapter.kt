@@ -15,16 +15,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import iti.example.foodhub.R
-import iti.example.foodhub.data.local.entity.Item
-import iti.example.foodhub.data.remote.responseModel.FavoriteItem
-import iti.example.foodhub.data.remote.responseModel.Meal
-import iti.example.foodhub.presentation.main.fav.FavouriteItemsAdapter.*
-import iti.example.foodhub.presentation.main.home.ItemsAdapter
-import iti.example.foodhub.presentation.main.home.MealDiffCallback
 import iti.example.foodhub.presentation.model.MealUiModel
 
 class FavouriteItemsAdapter (
-    private val favouriteItems: List<MealUiModel>,
+    private var favouriteItems: List<MealUiModel>,
     private val onClick: (MealUiModel) -> Unit
 ) : RecyclerView.Adapter<FavouriteItemsAdapter.FavouriteItemViewHolder>() {
 
@@ -50,6 +44,10 @@ class FavouriteItemsAdapter (
     }
 
     override fun getItemCount(): Int = favouriteItems.size
+    fun submitList(newItems: List<MealUiModel>) {
+        favouriteItems = newItems
+        notifyDataSetChanged()
+    }
 }
 
 
