@@ -16,6 +16,8 @@
     <string name="see_more">See More</string>
     <string name="see_less">See Less</string>
     <string name="description">This is a description of the recipe.,is a description of the recipe. is a description of the recipe.,is a description of the recipe. is a description of the recipe.,is a description of the recipe.</string>
+    <string name="names">-> Sohila Emam \n-> Faten safwat \n-> Hisham Mohamed \n-> Abdallah Al-Adham</string>
+    <string name="Description2">Tins application called (FoodHub) there ara home fragment that disply all meals by category and when to click to the meal show image of meal and ingradients and video to know all steps ,favourite fragment display meal that add as a favourite ,if you want to search about meal there is search fragment ....\n</string>
 
 
 </resources>
