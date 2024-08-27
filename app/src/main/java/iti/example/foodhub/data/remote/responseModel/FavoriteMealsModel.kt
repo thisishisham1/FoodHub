@@ -6,5 +6,5 @@ import androidx.room.PrimaryKey
 data class FavoriteItem(
     @PrimaryKey val id: Int,
     val name: String,
-    val imageUrl: String
+    val imageUrl: String,
 )

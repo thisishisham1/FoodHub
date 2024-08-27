@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import iti.example.foodhub.R
 import iti.example.foodhub.databinding.ActivityMainBinding
 import iti.example.foodhub.presentation.main.about.AboutFragment
-import iti.example.foodhub.presentation.main.fav.FavoriteFragment
+import iti.example.foodhub.presentation.main.fav.FavouriteFragment
 import iti.example.foodhub.presentation.main.home.HomeFragment
 import iti.example.foodhub.presentation.main.search.SearchFragment
 
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.home -> navigateFragment(HomeFragment())
                 R.id.search -> navigateFragment(SearchFragment())
                 R.id.profile -> navigateFragment(AboutFragment())
-                R.id.favorite -> navigateFragment(FavoriteFragment())
+                R.id.favorite -> navigateFragment(FavouriteFragment())
             }
             true
         }

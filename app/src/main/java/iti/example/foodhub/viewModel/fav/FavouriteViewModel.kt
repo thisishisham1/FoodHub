@@ -8,30 +8,52 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import iti.example.foodhub.data.local.entity.Favorite
 import iti.example.foodhub.data.local.entity.Item
-import iti.example.foodhub.data.remote.responseModel.FavoriteItem
-import iti.example.foodhub.data.remote.responseModel.Meal
+import iti.example.foodhub.data.remote.responseModel.ResponseDetailsModel
 import iti.example.foodhub.data.repository.RoomRepository
+import kotlinx.coroutines.launch
+
+
+import iti.example.foodhub.data.repository.RemoteRepository
 import iti.example.foodhub.presentation.model.MealUiModel
-import iti.example.foodhub.viewModel.authentication.TAG
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-
-
-import androidx.lifecycle.*
 import iti.example.foodhub.sharedPref.SharedPrefHelper
-import iti.example.foodhub.viewModel.home.HomeViewModel
-import kotlinx.coroutines.launch
-import java.net.SocketTimeoutException
+import iti.example.foodhub.viewModel.Details.MealDetailsViewModel
 
-class FavouriteViewModel(private val roomRepository: RoomRepository,
+private val TAG="FavouriteViewModel"
+class FavouriteViewModel(private  val remoteRepository: RemoteRepository,
+                         private val roomRepository: RoomRepository,
+
                          private val sharedPrefHelper: SharedPrefHelper) : ViewModel() {
 
-    private val _favoriteMeals = MutableLiveData<List<Item>>()
-    val favoriteMeals: LiveData<List<Item>> = _favoriteMeals
+    private val _favoriteMeals = MutableLiveData<List<MealUiModel>>()
+    val favoriteMeals: LiveData<List<MealUiModel>> = _favoriteMeals
+
+
+    init {
+        getFavoriteMeals(sharedPrefHelper.getInt("user_id", -1))
+    }
 
     fun getFavoriteMeals(userId: Int) {
         viewModelScope.launch {
-            _favoriteMeals.value = roomRepository.getUserFavorites(userId)
+            val response = remoteRepository.getMealsById(userId.toString())
+            runCatching {
+                val list = roomRepository.getUserFavorites(userId)
+                Log.d(TAG, "User favorites: $list") // Log the list of favorite items
+
+                val meals = mutableListOf<MealUiModel>() // Initialize a list to store fetched meals
+                list.forEach { favorite ->
+                    val meal = remoteRepository.getMealsById(favorite.itemId.toString())
+                    meal?.let {
+                        // meals.add(it)
+                        Log.d(TAG, "Fetched meal: $meal")
+                    }
+                }
+
+                _favoriteMeals.value = meals // Update the LiveData with the fetched meals
+                Log.d(TAG, "Favorite meals updated: $meals")
+            }.onSuccess {
+                Log.d(TAG, "Is success ")
+            }
+                .onFailure { Log.d(TAG, "failure: ") }
         }
     }
 
@@ -41,24 +63,22 @@ class FavouriteViewModel(private val roomRepository: RoomRepository,
             getFavoriteMeals(userId)
         }
     }
-}
 
-class FavouriteViewModelFactory(
-    private val roomRepository: RoomRepository,
-    private val sharedPrefHelper: SharedPrefHelper
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(FavouriteViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return FavouriteViewModel(roomRepository, sharedPrefHelper) as T
+
+    class FavouriteViewModelFactory(
+        private val remoteRepository: RemoteRepository,
+        private val roomRepository: RoomRepository,
+        private val sharedPrefHelper: SharedPrefHelper
+    ) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(FavouriteViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return FavouriteViewModel(remoteRepository, roomRepository, sharedPrefHelper) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
-
-
-
-
 
 
 
