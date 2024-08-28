@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.main.about.AboutFragment">
 
@@ -11,12 +12,10 @@
         android:id="@+id/id_aboutTextAppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         app:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -29,238 +28,82 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="About"
+                android:text="About Us"
                 android:textColor="@color/black"
                 style="@style/TextAppearance.Material3.HeadlineMedium"
-
                 />
+
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
-    <androidx.cardview.widget.CardView
-    android:id="@+id/id_card_Abdallah"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    card_view:cardCornerRadius="12dp"
-    card_view:layout_constraintTop_toBottomOf="@id/id_aboutTextAppBarLayout"
-    card_view:layout_constraintStart_toStartOf="parent"
-    android:layout_marginTop="10dp"
-    card_view:layout_constraintEnd_toEndOf="parent"
-    card_view:layout_constraintBottom_toTopOf="@id/id_card_Sohaila"
-    >
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:id="@+id/linear1"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.14"/>
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp">
-        <ImageView
-            android:id="@+id/profile_image_Abdallah"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/profile_image" />
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintEnd_toStartOf="@id/profile_image_Abdallah"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            android:weightSum="2"
-            android:orientation="vertical"
-            android:padding="20dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="10dp"
-                android:text="Faten"
-                android:textColor="@color/primary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+        app:layout_constraintTop_toBottomOf="@id/linear1"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="8dp"
+        android:text="Welcome\n   to Application FoodHub......"
+        style="@style/TextAppearance.Material3.BodyMedium"
+        android:textColor="@color/primary"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="10dp"
-                android:text="Safwat"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/id_card_Sohaila"
+    <Button
+        android:id="@+id/btn"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:cornerRadius="40dp"
+        android:backgroundTint="@color/primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.75"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"/>
+    <TextView
+        android:id="@+id/tv_creators"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        card_view:cardCornerRadius="12dp"
-        card_view:layout_constraintTop_toBottomOf="@id/id_card_Abdallah"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintEnd_toEndOf="parent"
-        card_view:layout_constraintBottom_toTopOf="@id/id_card_Hisham"
-        >
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
-            <ImageView
-                android:id="@+id/profile_image_Sohaila"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/profile_image" />
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintEnd_toStartOf="@id/profile_image_Sohaila"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                android:weightSum="2"
-                android:orientation="vertical"
-                android:padding="20dp"
-                >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Sohila"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/primary"
-                    android:layout_weight="1"
-                    android:padding="10dp"
-                    />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Emam"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_weight="1"
-                    android:padding="10dp"
-                    />
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/id_card_Hisham"
-        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="@id/btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        android:text="Creators :"
+        style="@style/TextAppearance.Material3.HeadlineMedium"
+        android:textColor="@color/white"/>
+    <TextView
+        android:id="@+id/Names"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        card_view:cardCornerRadius="12dp"
-        card_view:layout_constraintTop_toBottomOf="@id/id_card_Sohaila"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintEnd_toEndOf="parent"
-        card_view:layout_constraintBottom_toTopOf="@id/id_card_Faten"
-        >
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
-            <ImageView
-                android:id="@+id/profile_image_Hisham"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/profile_image" />
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintEnd_toStartOf="@id/profile_image_Hisham"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                android:weightSum="2"
-                android:orientation="vertical"
-                android:padding="20dp"
-                >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Hisham"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/primary"
-                    android:layout_weight="1"
-                    android:padding="10dp"
-                    />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Mohamed"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_weight="1"
-                    android:padding="10dp"
-                    />
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/id_card_Faten"
-        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_creators"
+        app:layout_constraintStart_toStartOf="@id/btn"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="18dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="@string/names"
+        style="@style/TextAppearance.Material3.BodyLarge"
+        android:textColor="@color/white"/>
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        card_view:cardCornerRadius="12dp"
-        card_view:layout_constraintTop_toBottomOf="@id/id_card_Hisham"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintEnd_toEndOf="parent"
-        card_view:layout_constraintBottom_toBottomOf="parent"
-        >
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
-            <ImageView
-                android:id="@+id/profile_image_Faten"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/profile_image" />
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintEnd_toStartOf="@id/profile_image_Faten"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                android:weightSum="2"
-                android:orientation="vertical"
-                android:padding="20dp"
-                >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10dp"
-                    android:text="Abdallah"
-                    android:textColor="@color/primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10dp"
-                    android:text="Al-Adham"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toBottomOf="@id/Names"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="25dp"
+        android:text="Synopsis :"
+        style="@style/TextAppearance.Material3.HeadlineMedium"
+        android:textColor="@color/white"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv2"
+        app:layout_constraintStart_toStartOf="@id/btn"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:text="@string/Description2"
+        style="@style/TextAppearance.Material3.BodyMedium"
+        android:textColor="@color/white"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
