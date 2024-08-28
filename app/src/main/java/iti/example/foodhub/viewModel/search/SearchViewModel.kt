@@ -76,7 +76,7 @@ class SearchViewModel(
 
     private suspend fun toggleFavorite(meal: MealUiModel, userId: Int) {
         runCatching {
-            roomRepository.insertItem(Item(itemId = meal.idMeal.toInt(), itemName = meal.strMeal))
+            roomRepository.insertItem(Item(itemId = meal.idMeal.toInt(), itemName = meal.strMeal, thumbnail = meal.strMealThumb))
             val updatedMeals = _meals.value!!.map {
                 if (it.idMeal == meal.idMeal) {
                     val updateMeal = it.copy(isFavorite = !it.isFavorite)
