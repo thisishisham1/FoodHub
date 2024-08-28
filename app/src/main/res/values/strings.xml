@@ -22,8 +22,8 @@
     <string name="techology">🛠 Technologies Used: \n ->Kotlin,\n ->retrofit,\n-> Gradle ,\n->Room,\n ->View Model \n ->Xml \n ->Glide</string>
     <string name="names2"><![CDATA[👨‍💻 Creators:\n -> Faten Safwat,\n -> Sohila Emam,\n -> Hisham Mohamed,\n -> Abdallah, Al-Adham]]></string>
     <string name="description3">This is a description of the recipe, is a description of the recipe. is a description of the recipe, is a description of the recipe. is a description of the recipe, is a description of the recipe</string>
-    <string name="technology1"><![CDATA[-> Kotlin,\n-> Retrofit,\n-> Gradle,\n-> Room,\n-> View Model,\n-> XML,\n-> Glide]]></string>
-    <string name="creators"><![CDATA[-> Faten Safwat,\n-> Sohila Emam,\n-> Hisham Mohamed,\n-> Abdallah Al-Adham]]></string>
+    <string name="technology1"><![CDATA[-> Kotlin\n-> XML\n-> Gradle\n-> Repository Pattern\n-> Coroutines\n-> Retrofit and okHttp\n-> Room\n-> View Model and LiveData\n-> Glide]]></string>
+    <string name="creators"><![CDATA[-> Faten Safwat\n-> Sohila Emam\n-> Hisham Mohamed\n-> Abdallah Al-Adham]]></string>
 
 
 </resources>
