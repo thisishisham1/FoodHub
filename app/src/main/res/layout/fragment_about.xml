@@ -8,102 +8,82 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.main.about.AboutFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/id_aboutTextAppBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-            <TextView
-                android:id="@+id/id_aboutText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="About Us"
-                android:textColor="@color/black"
-                style="@style/TextAppearance.Material3.HeadlineMedium"
-                />
-
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
     <LinearLayout
-        android:id="@+id/linear1"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.14"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/linear1"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="8dp"
-        android:text="Welcome\n   to Application FoodHub......"
-        style="@style/TextAppearance.Material3.BodyMedium"
-        android:textColor="@color/primary"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <Button
-        android:id="@+id/btn"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:cornerRadius="40dp"
-        android:backgroundTint="@color/primary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_percent="0.75"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp"/>
-    <TextView
-        android:id="@+id/tv_creators"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:text="Creators :"
-        style="@style/TextAppearance.Material3.HeadlineMedium"
-        android:textColor="@color/white"/>
-    <TextView
-        android:id="@+id/Names"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_creators"
-        app:layout_constraintStart_toStartOf="@id/btn"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="18dp"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:text="@string/names"
-        style="@style/TextAppearance.Material3.BodyLarge"
-        android:textColor="@color/white"/>
-    <TextView
-        android:id="@+id/tv2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/Names"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="25dp"
-        android:text="Synopsis :"
-        style="@style/TextAppearance.Material3.HeadlineMedium"
-        android:textColor="@color/white"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv2"
-        app:layout_constraintStart_toStartOf="@id/btn"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:text="@string/Description2"
-        style="@style/TextAppearance.Material3.BodyMedium"
-        android:textColor="@color/white"/>
+        <TextView
+            android:id="@+id/about_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="About"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:textColor="#FF5722"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="16dp"/>
+        <TextView
+            android:id="@+id/description_used_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📱 Description :"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            android:textColor="@color/primary"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp"/>
 
+        <TextView
+            android:id="@+id/about_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            style="@style/TextAppearance.Material3.BodyMedium"
+            android:layout_marginTop="10dp"
+            android:text="@string/description3"
+            android:paddingBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/technologies_used_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🛠 Technologies Used:"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            android:textColor="@color/primary"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/technologies_used"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            style="@style/TextAppearance.Material3.BodyMedium"
+            android:text="@string/technology1"
+            android:paddingBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/creators_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🖊 Creators:"
+            android:textColor="@color/primary"
+            android:layout_marginTop="10dp"
+            style="@style/TextAppearance.Material3.HeadlineMedium"
+            android:textStyle="bold"
+            android:paddingBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/creators"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            style="@style/TextAppearance.Material3.BodyMedium"
+            android:text="@string/creators"/>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

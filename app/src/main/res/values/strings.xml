@@ -18,6 +18,12 @@
     <string name="description">This is a description of the recipe.,is a description of the recipe. is a description of the recipe.,is a description of the recipe. is a description of the recipe.,is a description of the recipe.</string>
     <string name="names">-> Sohila Emam \n-> Faten safwat \n-> Hisham Mohamed \n-> Abdallah Al-Adham</string>
     <string name="Description2">Tins application called (FoodHub) there ara home fragment that disply all meals by category and when to click to the meal show image of meal and ingradients and video to know all steps ,favourite fragment display meal that add as a favourite ,if you want to search about meal there is search fragment ....\n</string>
+    <string name="description_about">📱 This is a description of the recipe.,is a description of the recipe. is a description of the recipe.,is a description of the recipe. is a description of the recipe.,is a description of the recipe</string>
+    <string name="techology">🛠 Technologies Used: \n ->Kotlin,\n ->retrofit,\n-> Gradle ,\n->Room,\n ->View Model \n ->Xml \n ->Glide</string>
+    <string name="names2"><![CDATA[👨‍💻 Creators:\n -> Faten Safwat,\n -> Sohila Emam,\n -> Hisham Mohamed,\n -> Abdallah, Al-Adham]]></string>
+    <string name="description3">This is a description of the recipe, is a description of the recipe. is a description of the recipe, is a description of the recipe. is a description of the recipe, is a description of the recipe</string>
+    <string name="technology1"><![CDATA[-> Kotlin,\n-> Retrofit,\n-> Gradle,\n-> Room,\n-> View Model,\n-> XML,\n-> Glide]]></string>
+    <string name="creators"><![CDATA[-> Faten Safwat,\n-> Sohila Emam,\n-> Hisham Mohamed,\n-> Abdallah Al-Adham]]></string>
 
 
 </resources>
