@@ -24,7 +24,6 @@ import iti.example.foodhub.presentation.main.details.DetailsActivity
 import iti.example.foodhub.presentation.main.home.ItemsAdapter
 import iti.example.foodhub.sharedPref.SharedPrefHelper
 import iti.example.foodhub.viewModel.fav.FavouriteViewModel
-import iti.example.foodhub.viewModel.fav.FavouriteViewModelFactory
 
 class FavoriteFragment : Fragment() {
 
