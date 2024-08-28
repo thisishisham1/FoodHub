@@ -8,366 +8,126 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import iti.example.foodhub.data.local.entity.Favorite
 import iti.example.foodhub.data.local.entity.Item
-import iti.example.foodhub.data.remote.responseModel.ResponseDetailsModel
-import iti.example.foodhub.data.repository.RoomRepository
-import kotlinx.coroutines.launch
-
-
 import iti.example.foodhub.data.repository.RemoteRepository
+import iti.example.foodhub.data.repository.RoomRepository
 import iti.example.foodhub.presentation.model.MealUiModel
 import iti.example.foodhub.sharedPref.SharedPrefHelper
-import iti.example.foodhub.viewModel.Details.MealDetailsViewModel
+import iti.example.foodhub.viewModel.authentication.TAG
+import kotlinx.coroutines.launch
+import java.net.SocketTimeoutException
 
-private val TAG="FavouriteViewModel"
-class FavouriteViewModel(private  val remoteRepository: RemoteRepository,
-                         private val roomRepository: RoomRepository,
+private const val TAG = "FavouriteViewModel"
 
-                         private val sharedPrefHelper: SharedPrefHelper) : ViewModel() {
+class FavouriteViewModel(
+    private val remoteRepository: RemoteRepository,
+    private val roomRepository: RoomRepository,
+    private val sharedPrefHelper: SharedPrefHelper
+) : ViewModel() {
 
     private val _favoriteMeals = MutableLiveData<List<MealUiModel>>()
     val favoriteMeals: LiveData<List<MealUiModel>> = _favoriteMeals
 
-
     init {
-        getFavoriteMeals(sharedPrefHelper.getInt("user_id", -1))
+        getFavoriteMeals()
     }
 
-    fun getFavoriteMeals(userId: Int) {
+    private fun getFavoriteMeals() {
+        val userId = sharedPrefHelper.getInt("user_id", -1)
+        if (userId == -1) {
+            _favoriteMeals.value = emptyList()
+            return
+        }
         viewModelScope.launch {
-            val response = remoteRepository.getMealsById(userId.toString())
             runCatching {
                 val list = roomRepository.getUserFavorites(userId)
-                Log.d(TAG, "User favorites: $list") // Log the list of favorite items
-
-                val meals = mutableListOf<MealUiModel>() // Initialize a list to store fetched meals
-                list.forEach { favorite ->
-                    val meal = remoteRepository.getMealsById(favorite.itemId.toString())
-                    meal?.let {
-                        // meals.add(it)
-                        Log.d(TAG, "Fetched meal: $meal")
-                    }
-                }
-
-                _favoriteMeals.value = meals // Update the LiveData with the fetched meals
-                Log.d(TAG, "Favorite meals updated: $meals")
+                _favoriteMeals.value = list.map { it.toUiModel(true) }
+                Log.d("FavouriteViewModel", "getFavoriteMeals: $list")
             }.onSuccess {
-                Log.d(TAG, "Is success ")
+                Log.d("FavouriteViewModel", "Is success ")
+            }.onFailure {
+                _favoriteMeals.value = emptyList()
+                Log.d("FavouriteViewModel", "failure: ")
             }
-                .onFailure { Log.d(TAG, "failure: ") }
         }
     }
 
-    fun removeFavorite(item: Item, userId: Int) {
+    fun favoriteClickedHandle(meal: MealUiModel) {
+        val userId = getLoggedInUserId()
         viewModelScope.launch {
-            roomRepository.deleteFavorite(Favorite(userId, item.itemId))
-            getFavoriteMeals(userId)
-        }
-    }
-
-
-    class FavouriteViewModelFactory(
-        private val remoteRepository: RemoteRepository,
-        private val roomRepository: RoomRepository,
-        private val sharedPrefHelper: SharedPrefHelper
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(FavouriteViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return FavouriteViewModel(remoteRepository, roomRepository, sharedPrefHelper) as T
+            Log.d(TAG, "favoriteClickedHandle: Toggling favorite for meal: ${meal.idMeal}")
+            runCatching {
+                toggleFavorite(meal = meal, userId = userId)
+            }.onFailure { exception ->
+                if (exception is SocketTimeoutException) {
+                    handleSocketTimeoutException(exception)
+                } else {
+                    Log.e(TAG, "favoriteClickedHandle: Error toggling favorite", exception)
+                }
             }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*class FavouriteViewModel(private val repository: RoomRepository) : ViewModel() {
-
-    private val _favorites = MutableLiveData<List<Item>>()
-    val favorites: LiveData<List<Item>> get() = _favorites
-
-    private val _mealDetails = MutableLiveData<Meal>()
-    val mealDetails: LiveData<Meal> get() = _mealDetails
-
-    fun getUserFavorites(userId: Int) {
-        viewModelScope.launch {
-            _favorites.value = repository.getUserFavorites(userId)
         }
     }
 
-    fun addFavorite(favorite: Favorite) {
-        viewModelScope.launch {
-            repository.insertFavorite(favorite)
-            getUserFavorites(favorite.userId)
-        }
-    }
-
-    fun removeFavorite(favorite: Favorite) {
-        viewModelScope.launch {
-            repository.deleteFavorite(favorite)
-            getUserFavorites(favorite.userId)
-        }
-    }
-/*
-    fun getMealById(mealId: String) {
-        viewModelScope.launch {
-            val response = repository.getMealById(mealId)
-            _mealDetails.value = response.meals.firstOrNull()
-        }
-    }*/
-}
-
-
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-class FavouriteViewModel(private val repository: RoomRepository) : ViewModel() {
-
-    private val _favouriteItems = MutableLiveData<List<MealUiModel>>()
-    val favouriteItems: LiveData<List<MealUiModel>> get() = _favouriteItems
-
-    fun getUserFavorites(userId: Int) {
-        viewModelScope.launch {
-            val items = repository.getUserFavorites(userId)
-            _favouriteItems.value = items.map {
-                MealUiModel(
-                    strMeal = it.itemName,
-                    strMealThumb = "",
-                    idMeal = it.itemId.toString(),
-                    isFavorite = true
+    private suspend fun toggleFavorite(meal: MealUiModel, userId: Int) {
+        runCatching {
+            roomRepository.insertItem(
+                Item(
+                    itemId = meal.idMeal.toInt(),
+                    itemName = meal.strMeal,
+                    thumbnail = meal.strMealThumb
                 )
+            )
+            val updatedMeals = _favoriteMeals.value!!.mapNotNull {
+                if (it.idMeal == meal.idMeal) {
+                    val updateMeal = it.copy(isFavorite = !it.isFavorite)
+                    if (updateMeal.isFavorite) {
+                        Log.d(TAG, "toggleFavorite: Adding favorite for meal: ${meal.idMeal}")
+                        roomRepository.insertFavorite(Favorite(userId, meal.idMeal.toInt()))
+                        updateMeal
+                    } else {
+                        Log.d(TAG, "toggleFavorite: Removing favorite for meal: ${meal.idMeal}")
+                        roomRepository.deleteFavorite(Favorite(userId, meal.idMeal.toInt()))
+                        roomRepository.deleteItemById(meal.idMeal.toInt())
+                        null
+                    }
+                } else {
+                    it
+                }
+            }
+            _favoriteMeals.value = updatedMeals
+            Log.d(TAG, "toggleFavorite: Updated meals list")
+        }.onFailure { exception ->
+            if (exception is SocketTimeoutException) {
+                handleSocketTimeoutException(exception)
+            } else {
+                Log.e(TAG, "toggleFavorite: Error updating favorite", exception)
             }
         }
     }
 
-    fun deleteFavorite(favorite: Favorite) {
-        viewModelScope.launch {
-            repository.deleteFavorite(favorite)
-            getUserFavorites(favorite.userId)
-        }
+    private fun getLoggedInUserId(): Int {
+        return sharedPrefHelper.getInt("user_id", -1)
+    }
+
+    private fun handleSocketTimeoutException(exception: SocketTimeoutException) {
+        Log.e(TAG, "SocketTimeoutException: ${exception.message}")
     }
 }
-class FavouriteViewModelFactory(private val roomRepository: RoomRepository) : ViewModelProvider.Factory {
+class FavouriteViewModelFactory(
+    private val remoteRepository: RemoteRepository,
+    private val roomRepository: RoomRepository,
+    private val sharedPrefHelper: SharedPrefHelper
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return FavouriteViewModel(roomRepository) as T
+        if (modelClass.isAssignableFrom(FavouriteViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return FavouriteViewModel(remoteRepository, roomRepository, sharedPrefHelper) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+fun Item.toUiModel(isFavorite: Boolean) = MealUiModel(
+    strMeal = itemName,
+    strMealThumb = thumbnail,
+    isFavorite = true,
+    idMeal = itemId.toString()
+)
