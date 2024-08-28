@@ -6,48 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import iti.example.foodhub.data.remote.responseModel.FavoriteItem
+import iti.example.foodhub.data.local.entity.Favorite
+import iti.example.foodhub.data.local.entity.Item
+import iti.example.foodhub.data.repository.RemoteRepository
 import iti.example.foodhub.data.repository.RoomRepository
+import iti.example.foodhub.presentation.model.MealUiModel
+import iti.example.foodhub.sharedPref.SharedPrefHelper
 import iti.example.foodhub.viewModel.authentication.TAG
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import java.net.SocketTimeoutException
 
-class FavouriteViewModel(
-    private val roomRepository: RoomRepository)
-    :ViewModel(){
+private const val TAG = "FavouriteViewModel"
 
-    private  val _favouriteMeals=MutableLiveData<List<FavoriteItem>>()
-    val favouriteMeals : LiveData<List<FavoriteItem>> get()  = _favouriteMeals
-    init {
-        getFavouriteMeals(1)
-    }
-
-    fun getFavouriteMeals(userId:Int)
-    {
-        viewModelScope.launch {
-                try {
-
-                    val favoriteItem = roomRepository.getUserFavorites(userId)
-                    Log.d("FavouriteViewModel", "getFavouriteMeals called with ID: $userId")
-                    _favouriteMeals.value = favoriteItem.map { favourite ->
-                        FavoriteItem(
-                            id = favourite.itemId,
-                            name = favourite.itemName,
-                            imageUrl = "https://www.example.com/images/spaghetti.jpg"
-                        )
-                    }
-                } catch (e: Exception) {
-                    Log.e("FavouriteViewModel", "Error fetching meal fav", e)
-                }
-            }
-        }
-
-
-
-    class FavouriteViewModelFactory(private val roomRepository: RoomRepository) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return FavouriteViewModel(roomRepository) as T
-        }
-    }
+class FavouriteViewModel() : ViewModel() {
 
 }
